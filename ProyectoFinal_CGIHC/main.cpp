@@ -46,7 +46,7 @@ GLFWmonitor *monitors;
 void getResolution(void);
 
 // camera
-Camera camera(glm::vec3(0.0f, 10.0f, 90.0f));
+Camera camera(glm::vec3(0.0f, 150.0f, 90.0f));
 float MovementSpeed = 0.1f;
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
@@ -266,6 +266,10 @@ int main()
 
 	// load models
 	// -----------
+	Model mar("resources/objects/mar/mar.obj");
+	Model playa("resources/objects/playa/playa.obj");
+
+
 	Model piso("resources/objects/piso/piso.obj");
 	//Model botaDer("resources/objects/Personaje/bota.obj");
 	//Model piernaDer("resources/objects/Personaje/piernader.obj");
@@ -406,9 +410,16 @@ int main()
 
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.2f));
+		model = glm::scale(model, glm::vec3(0.5f));
 		staticShader.setMat4("model", model);
-		piso.Draw(staticShader);
+		mar.Draw(staticShader);
+		//piso.Draw(staticShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.3f));
+		staticShader.setMat4("model", model);
+		playa.Draw(staticShader);
 
 		/*model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -70.0f));
 		model = glm::scale(model, glm::vec3(5.0f));
