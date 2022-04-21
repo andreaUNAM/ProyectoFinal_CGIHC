@@ -556,13 +556,13 @@ void my_input(GLFWwindow *window, int key, int scancode, int action, int mode)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		camera.ProcessKeyboard(FORWARD, (float)deltaTime);
+		camera.ProcessKeyboard(FORWARD, (float)deltaTime+50);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		camera.ProcessKeyboard(BACKWARD, (float)deltaTime);
+		camera.ProcessKeyboard(BACKWARD, (float)deltaTime+50);
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		camera.ProcessKeyboard(LEFT, (float)deltaTime);
+		camera.ProcessKeyboard(LEFT, (float)deltaTime+50);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		camera.ProcessKeyboard(RIGHT, (float)deltaTime);
+		camera.ProcessKeyboard(RIGHT, (float)deltaTime+50);
 	//To Configure Model
 	if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
 		posZ++;
