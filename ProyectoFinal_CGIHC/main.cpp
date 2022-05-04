@@ -67,12 +67,25 @@ glm::vec3 lightDirection(0.0f, -1.0f, -1.0f);
 //float y = 0.0f;
 float	movAuto_x = 0.0f,
 		movAuto_z = 0.0f,
-		orienta = 0.0f;
+		orienta = 0.0f,
+		joseX = 1500,
+		joseZ = -800.0,
+		joseY = 0.0,
+		deltaJose = 0.0,
+		deltaRadio = 1.0;
+float   roamingX = 1500,
+		roamingZ = -800,
+		roamingY = 500,
+		deltaRoamingZ = 0.0,
+		deltaRoamingY = 0.0;
 bool	animacion = false,
 		recorrido1 = true,
 		recorrido2 = false,
 		recorrido3 = false,
-		recorrido4 = false;
+		recorrido4 = false,
+		dibujaJose = true,
+		abducir = false,
+		cambiaTrayectoriaNave = false;
 
 
 //Keyframes (Manipulación y dibujo)
@@ -182,6 +195,48 @@ void animate(void)
 	{
 		movAuto_z += 3.0f;
 	}
+
+	if (abducir) {
+
+		if (joseY >= 500) {
+			dibujaJose = false;
+			cambiaTrayectoriaNave = true;
+		}
+		else {
+			lightPosition.x = joseX = 1500 + 200 * deltaRadio * cos(deltaJose * 90);
+			lightPosition.z = joseZ = -800 + 200 * deltaRadio * sin(deltaJose * 90);
+			lightPosition.y = 0.0f;
+			joseY = 10 * deltaJose;
+			deltaJose += 0.1;
+			if (deltaRadio > 0) {
+				deltaRadio -= 0.005;
+			}
+			else {
+				deltaRadio = 0;
+			}
+		}
+		if (cambiaTrayectoriaNave) {
+			roamingY += deltaRoamingY;
+			roamingZ -= (deltaRoamingZ*deltaRoamingZ)/4;
+			deltaRoamingZ+= 0.1;
+			deltaRoamingY = deltaRoamingZ;
+		}
+
+	}
+	else {
+		joseX = 1500.0;
+		joseY = 0.0;
+		joseZ = -800;
+		dibujaJose = true;
+		cambiaTrayectoriaNave = false;
+		deltaJose = 0.0f;
+		deltaRadio = 1.0f;
+		roamingX = 1500,
+		roamingZ = -800,
+		roamingY = 500;
+	}
+
+
 }
 
 void getResolution()
@@ -283,6 +338,8 @@ int main()
 	Model kiosko("resources/objects/kiosko/kiosko.obj");
 	Model bmo("resources/objects/bmo/bmo.obj");
 	Model pool("resources/objects/pool/pool.obj");
+	Model cow("resources/objects/cow/cow.obj");
+	Model roaming_eye("resources/objects/roaming_eye/roaming_eye.obj");
 	//Model botaDer("resources/objects/Personaje/bota.obj");
 	//Model piernaDer("resources/objects/Personaje/piernader.obj");
 	//Model piernaIzq("resources/objects/Personaje/piernader.obj");
@@ -345,12 +402,18 @@ int main()
 		staticShader.setVec3("dirLight.specular", glm::vec3(0.0f, 0.0f, 0.0f));
 
 		staticShader.setVec3("pointLight[0].position", lightPosition);
-		staticShader.setVec3("pointLight[0].ambient", glm::vec3(0.0f, 0.0f, 0.0f));
-		staticShader.setVec3("pointLight[0].diffuse", glm::vec3(0.0f, 0.0f, 0.0f));
+		if (dibujaJose && abducir) {
+			staticShader.setVec3("pointLight[0].ambient", glm::vec3(1.f, 1.f, 0.0f));
+			staticShader.setVec3("pointLight[0].diffuse", glm::vec3(1.0f, 1.0f, 0.0f));
+		}
+		else {
+			staticShader.setVec3("pointLight[0].ambient", glm::vec3(0.0f, 0.0f, 0.0f));
+			staticShader.setVec3("pointLight[0].diffuse", glm::vec3(0.0f, 0.0f, 0.0f));
+		}
 		staticShader.setVec3("pointLight[0].specular", glm::vec3(0.0f, 0.0f, 0.0f));
-		staticShader.setFloat("pointLight[0].constant", 0.08f);
+		staticShader.setFloat("pointLight[0].constant", 0.8f);
 		staticShader.setFloat("pointLight[0].linear", 0.009f);
-		staticShader.setFloat("pointLight[0].quadratic", 0.032f);
+		staticShader.setFloat("pointLight[0].quadratic", 0.000032f);
 
 		staticShader.setVec3("pointLight[1].position", glm::vec3(-80.0, 0.0f, 0.0f));
 		staticShader.setVec3("pointLight[1].ambient", glm::vec3(0.0f, 0.0f, 0.0f));
@@ -562,6 +625,22 @@ int main()
 		staticShader.setMat4("model", model);
 		pool.Draw(staticShader);
 
+		if (dibujaJose) {
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(joseX, joseY, joseZ));
+			model = glm::scale(model, glm::vec3(0.4f));
+			//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			staticShader.setMat4("model", model);
+			cow.Draw(staticShader);
+		}
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(roamingX, roamingY, roamingZ));
+		model = glm::scale(model, glm::vec3(80.0f));
+		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		roaming_eye.Draw(staticShader);
+
 		
 
 		/*
@@ -764,6 +843,8 @@ void my_input(GLFWwindow *window, int key, int scancode, int action, int mode)
 		lightPosition.x++;
 	if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS)
 		lightPosition.x--;
+	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
+		abducir ^= true;
 
 	//Car animation
 	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
