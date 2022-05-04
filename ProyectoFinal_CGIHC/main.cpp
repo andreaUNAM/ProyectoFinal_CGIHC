@@ -41,12 +41,12 @@ void animate(void);
 // settings
 unsigned int SCR_WIDTH = 800;
 unsigned int SCR_HEIGHT = 600;
-GLFWmonitor *monitors;
+GLFWmonitor* monitors;
 
 void getResolution(void);
 
 // camera
-Camera camera(glm::vec3(0.0f,300.0f, 0.0f));
+Camera camera(glm::vec3(0.0f, 300.0f, 0.0f));
 float MovementSpeed = 0.1f;
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
@@ -56,7 +56,7 @@ bool firstMouse = true;
 const int FPS = 60;
 const int LOOP_TIME = 1000 / FPS; // = 16 milisec // 1000 millisec == 1 sec
 double	deltaTime = 0.0f,
-		lastFrame = 0.0f;
+lastFrame = 0.0f;
 
 //Lighting
 glm::vec3 lightPosition(0.0f, 4.0f, -10.0f);
@@ -66,39 +66,51 @@ glm::vec3 lightDirection(0.0f, -1.0f, -1.0f);
 //float x = 0.0f;
 //float y = 0.0f;
 float	movAuto_x = 0.0f,
-		movAuto_z = 0.0f,
-		orienta = 0.0f,
-		joseX = 1500,
-		joseZ = -800.0,
-		joseY = 0.0,
-		deltaJose = 0.0,
-		deltaRadio = 1.0;
+movAuto_z = 0.0f,
+orienta = 0.0f,
+joseX = 1500,
+joseZ = -800.0,
+joseY = 0.0,
+deltaJose = 0.0,
+deltaRadio = 1.0;
+//Variables de cambio de la nave
 float   roamingX = 1500,
-		roamingZ = -800,
-		roamingY = 500,
-		deltaRoamingZ = 0.0,
-		deltaRoamingY = 0.0;
+roamingZ = -800,
+roamingY = 500,
+deltaRoamingZ = 0.0,
+deltaRoamingY = 0.0,
+rotarJose = 0.0;
+//Variables de cambio de los rituales
+float ritualZ = -800.0,
+anti_ritualZ = 200.0,
+union_ritualX = 2000.0,
+rituales_escala = 2.0,
+ritual_rot = 0.0;
 bool	animacion = false,
-		recorrido1 = true,
-		recorrido2 = false,
-		recorrido3 = false,
-		recorrido4 = false,
-		dibujaJose = true,
-		abducir = false,
-		cambiaTrayectoriaNave = false;
+recorrido1 = true,
+recorrido2 = false,
+recorrido3 = false,
+recorrido4 = false,
+dibujaJose = true,
+abducir = false,
+cambiaTrayectoriaNave = false,
+hacer_ritual = false,
+dibuja_ritual = true,
+dibuja_anti_ritual = true,
+dibuja_union_ritual = false;
 
 
 //Keyframes (Manipulación y dibujo)
 float	posX = 0.0f,
-		posY = 0.0f,
-		posZ = 0.0f,
-		rotRodIzq = 0.0f,
-		giroMonito = 0.0f;
+posY = 0.0f,
+posZ = 0.0f,
+rotRodIzq = 0.0f,
+giroMonito = 0.0f;
 float	incX = 0.0f,
-		incY = 0.0f,
-		incZ = 0.0f,
-		rotInc = 0.0f,
-		giroMonitoInc = 0.0f;
+incY = 0.0f,
+incZ = 0.0f,
+rotInc = 0.0f,
+giroMonitoInc = 0.0f;
 
 #define MAX_FRAMES 9
 int i_max_steps = 60;
@@ -213,12 +225,16 @@ void animate(void)
 			}
 			else {
 				deltaRadio = 0;
+				if (rotarJose < 90.0) {
+					rotarJose++;
+				}
+
 			}
 		}
 		if (cambiaTrayectoriaNave) {
 			roamingY += deltaRoamingY;
-			roamingZ -= (deltaRoamingZ*deltaRoamingZ)/4;
-			deltaRoamingZ+= 0.1;
+			roamingZ -= (deltaRoamingZ * deltaRoamingZ) / 4;
+			deltaRoamingZ += 0.1;
 			deltaRoamingY = deltaRoamingZ;
 		}
 
@@ -232,16 +248,38 @@ void animate(void)
 		deltaJose = 0.0f;
 		deltaRadio = 1.0f;
 		roamingX = 1500,
-		roamingZ = -800,
-		roamingY = 500;
+			roamingZ = -800,
+			roamingY = 500;
+		rotarJose = 0.0f;
 	}
 
+	if (hacer_ritual) {
+		if (ritualZ < anti_ritualZ) {
+			rituales_escala += 0.2;
+			ritualZ += 5;
+			anti_ritualZ -= 5;
+		}
+		else {
+			dibuja_ritual = false;
+			dibuja_anti_ritual = false;
+			dibuja_union_ritual = true;
+			union_ritualX += 20;
+		}
+	}
+	else {
+		dibuja_ritual = true;
+		dibuja_anti_ritual = true;
+		dibuja_union_ritual = false;
+		ritualZ = -800.0;
+		anti_ritualZ = 200.0;
+		rituales_escala = 2.0;
+	}
 
 }
 
 void getResolution()
 {
-	const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
 	SCR_WIDTH = mode->width;
 	SCR_HEIGHT = (mode->height) - 80;
@@ -340,6 +378,9 @@ int main()
 	Model pool("resources/objects/pool/pool.obj");
 	Model cow("resources/objects/cow/cow.obj");
 	Model roaming_eye("resources/objects/roaming_eye/roaming_eye.obj");
+	Model ritual("resources/objects/ritual/ritual.obj");
+	Model anti_ritual("resources/objects/anti-ritual/anti-ritual.obj");
+	Model union_ritual("resources/objects/union-ritual/union-ritual.obj");
 	//Model botaDer("resources/objects/Personaje/bota.obj");
 	//Model piernaDer("resources/objects/Personaje/piernader.obj");
 	//Model piernaIzq("resources/objects/Personaje/piernader.obj");
@@ -512,7 +553,7 @@ int main()
 					house2_1.Draw(staticShader);
 				}
 
-				
+
 				model = glm::mat4(1.0f);
 				model = glm::translate(model, glm::vec3(-1900.0f + p, 0.0f, 1250.0f + r));
 				model = glm::scale(model, glm::vec3(15.0f));
@@ -629,7 +670,7 @@ int main()
 			model = glm::mat4(1.0f);
 			model = glm::translate(model, glm::vec3(joseX, joseY, joseZ));
 			model = glm::scale(model, glm::vec3(0.4f));
-			//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::rotate(model, glm::radians(rotarJose), glm::vec3(0.0f, 0.0f, 1.0f));
 			staticShader.setMat4("model", model);
 			cow.Draw(staticShader);
 		}
@@ -641,7 +682,32 @@ int main()
 		staticShader.setMat4("model", model);
 		roaming_eye.Draw(staticShader);
 
-		
+		if (dibuja_ritual) {
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(2000, -100, ritualZ));
+			model = glm::scale(model, glm::vec3(rituales_escala));
+			//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			staticShader.setMat4("model", model);
+			ritual.Draw(staticShader);
+		}
+
+		if (dibuja_anti_ritual) {
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(2000, -100, anti_ritualZ));
+			model = glm::scale(model, glm::vec3(rituales_escala));
+			//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			staticShader.setMat4("model", model);
+			anti_ritual.Draw(staticShader);
+		}
+
+		if (dibuja_union_ritual) {
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(union_ritualX, -100, -300));
+			model = glm::scale(model, glm::vec3(rituales_escala));
+			//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			staticShader.setMat4("model", model);
+			union_ritual.Draw(staticShader);
+		}
 
 		/*
 		model = glm::mat4(1.0f);
@@ -678,7 +744,7 @@ int main()
 		staticShader.setMat4("model", model);
 		faro.Draw(staticShader);
 
-		
+
 
 		/*model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -70.0f));
 		model = glm::scale(model, glm::vec3(5.0f));
@@ -810,18 +876,18 @@ int main()
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-void my_input(GLFWwindow *window, int key, int scancode, int action, int mode)
+void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		camera.ProcessKeyboard(FORWARD, (float)deltaTime+50);
+		camera.ProcessKeyboard(FORWARD, (float)deltaTime + 50);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		camera.ProcessKeyboard(BACKWARD, (float)deltaTime+50);
+		camera.ProcessKeyboard(BACKWARD, (float)deltaTime + 50);
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		camera.ProcessKeyboard(LEFT, (float)deltaTime+50);
+		camera.ProcessKeyboard(LEFT, (float)deltaTime + 50);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		camera.ProcessKeyboard(RIGHT, (float)deltaTime+50);
+		camera.ProcessKeyboard(RIGHT, (float)deltaTime + 50);
 	//To Configure Model
 	if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
 		posZ++;
@@ -845,6 +911,8 @@ void my_input(GLFWwindow *window, int key, int scancode, int action, int mode)
 		lightPosition.x--;
 	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
 		abducir ^= true;
+	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
+		hacer_ritual ^= true;
 
 	//Car animation
 	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
