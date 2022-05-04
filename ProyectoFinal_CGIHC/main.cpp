@@ -46,7 +46,7 @@ GLFWmonitor *monitors;
 void getResolution(void);
 
 // camera
-Camera camera(glm::vec3(0.0f, 150.0f, 90.0f));
+Camera camera(glm::vec3(0.0f,300.0f, 0.0f));
 float MovementSpeed = 0.1f;
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
@@ -268,9 +268,21 @@ int main()
 	// -----------
 	Model mar("resources/objects/mar/mar.obj");
 	Model playa("resources/objects/playa/playa.obj");
-
-
 	Model piso("resources/objects/piso/piso.obj");
+	Model house2("resources/objects/house2/house2.obj");
+	Model house4("resources/objects/house4/house4.obj");
+	Model faro("resources/objects/Lighthouse/lighthouse.obj");
+	Model house3("resources/objects/House3/casaBlanca.obj");
+	Model house5("resources/objects/house5/house5.obj");
+	Model motel("resources/objects/motel/motel.obj");
+	Model center("resources/objects/pokemoncenter/pokemoncenter.obj");
+	Model house2_1("resources/objects/house2_1/house2_1.obj");
+	Model house3_1("resources/objects/House3_1/casaRoja.obj");
+	Model house3_2("resources/objects/House3_2/casaAzul.obj");
+	Model house3_3("resources/objects/House3_3/casaVerde.obj");
+	Model kiosko("resources/objects/kiosko/kiosko.obj");
+	Model bmo("resources/objects/bmo/bmo.obj");
+	Model pool("resources/objects/pool/pool.obj");
 	//Model botaDer("resources/objects/Personaje/bota.obj");
 	//Model piernaDer("resources/objects/Personaje/piernader.obj");
 	//Model piernaIzq("resources/objects/Personaje/piernader.obj");
@@ -308,7 +320,7 @@ int main()
 	while (!glfwWindowShouldClose(window))
 	{
 		skyboxShader.setInt("skybox", 0);
-		
+
 		// per-frame time logic
 		// --------------------
 		lastFrame = SDL_GetTicks();
@@ -362,7 +374,7 @@ int main()
 		glm::vec3 lightColor = glm::vec3(0.6f);
 		glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
 		glm::vec3 ambientColor = diffuseColor * glm::vec3(0.75f);
-		
+
 
 		// -------------------------------------------------------------------------------------------------------------------------
 		// Personaje Animacion
@@ -371,7 +383,7 @@ int main()
 		animShader.use();
 		animShader.setMat4("projection", projection);
 		animShader.setMat4("view", view);
-	
+
 		animShader.setVec3("material.specular", glm::vec3(0.5f));
 		animShader.setFloat("material.shininess", 32.0f);
 		animShader.setVec3("light.ambient", ambientColor);
@@ -408,18 +420,186 @@ int main()
 		staticShader.setMat4("model", model);
 		casaDoll.Draw(staticShader);*/
 
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.5f));
-		staticShader.setMat4("model", model);
-		mar.Draw(staticShader);
-		//piso.Draw(staticShader);
 
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.3f));
+		model = glm::translate(model, glm::vec3(-2500.0f, -1550.0f, 2500.0f));
+		model = glm::scale(model, glm::vec3(500.0f));
 		staticShader.setMat4("model", model);
-		playa.Draw(staticShader);
+		piso.Draw(staticShader);
+
+		float p = 0;
+		float r = 0;
+		for (int j = 0; j < 3; j++) {
+			for (int i = 0; i < 4; i++) {
+
+				if (i % 2 == 0) {
+					model = glm::mat4(1.0f);
+					model = glm::translate(model, glm::vec3(-1800.0f + p, 3.0f, 1550.0f + r));
+					model = glm::scale(model, glm::vec3(35.0f));
+					model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+					staticShader.setMat4("model", model);
+					house2.Draw(staticShader);
+				}
+				else {
+					model = glm::mat4(1.0f);
+					model = glm::translate(model, glm::vec3(-1800.0f + p, 3.0f, 1550.0f + r));
+					model = glm::scale(model, glm::vec3(35.0f));
+					model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+					staticShader.setMat4("model", model);
+					house2_1.Draw(staticShader);
+				}
+
+				
+				model = glm::mat4(1.0f);
+				model = glm::translate(model, glm::vec3(-1900.0f + p, 0.0f, 1250.0f + r));
+				model = glm::scale(model, glm::vec3(15.0f));
+				model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+				staticShader.setMat4("model", model);
+				house4.Draw(staticShader);
+
+				switch (i)
+				{
+				case 0:
+					model = glm::mat4(1.0f);
+					model = glm::translate(model, glm::vec3(-1850.0f + p, 0.0f, 1050.0f + r));
+					model = glm::scale(model, glm::vec3(1.5f));
+					model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+					staticShader.setMat4("model", model);
+					house3.Draw(staticShader);
+					break;
+				case 1:
+					model = glm::mat4(1.0f);
+					model = glm::translate(model, glm::vec3(-1850.0f + p, 0.0f, 1050.0f + r));
+					model = glm::scale(model, glm::vec3(1.5f));
+					model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+					staticShader.setMat4("model", model);
+					house3_1.Draw(staticShader);
+					break;
+				case 2:
+					model = glm::mat4(1.0f);
+					model = glm::translate(model, glm::vec3(-1850.0f + p, 0.0f, 1050.0f + r));
+					model = glm::scale(model, glm::vec3(1.5f));
+					model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+					staticShader.setMat4("model", model);
+					house3_2.Draw(staticShader);
+					break;
+				case 3:
+					model = glm::mat4(1.0f);
+					model = glm::translate(model, glm::vec3(-1850.0f + p, 0.0f, 1050.0f + r));
+					model = glm::scale(model, glm::vec3(1.5f));
+					model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+					staticShader.setMat4("model", model);
+					house3_3.Draw(staticShader);
+					break;
+				default:
+					model = glm::mat4(1.0f);
+					model = glm::translate(model, glm::vec3(-1850.0f + p, 0.0f, 1050.0f + r));
+					model = glm::scale(model, glm::vec3(1.5f));
+					model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+					staticShader.setMat4("model", model);
+					house3.Draw(staticShader);
+					break;
+				}
+				model = glm::mat4(1.0f);
+				model = glm::translate(model, glm::vec3(-1850.0f + p, 0.0f, 1050.0f + r));
+				model = glm::scale(model, glm::vec3(1.5f));
+				model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+				staticShader.setMat4("model", model);
+				house3.Draw(staticShader);
+
+				model = glm::mat4(1.0f);
+				model = glm::translate(model, glm::vec3(-1850.0f + p, 3.0f, 750.0f + r));
+				model = glm::scale(model, glm::vec3(1.5f));
+				staticShader.setMat4("model", model);
+				house5.Draw(staticShader);
+
+				p = p + 500.0;
+			}
+			p = 0.0;
+			r = r - 1200.0;
+		}
+
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-500.0f, 6.0f, -2000.0f));
+		model = glm::scale(model, glm::vec3(0.7f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		motel.Draw(staticShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(200.0f, 90.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(30.0f, 20.0f, 50.0f));
+		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		center.Draw(staticShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(800.0f, 90.0f, -2000.0f));
+		model = glm::scale(model, glm::vec3(50.0f, 20.0f, 30.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		center.Draw(staticShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(800.0f, 6.0f, 1500.0f));
+		model = glm::scale(model, glm::vec3(0.8f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		motel.Draw(staticShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(550.0f, 410.0f, 800.0f));
+		model = glm::scale(model, glm::vec3(3.0f));
+		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		kiosko.Draw(staticShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(400.0f, -500.0f, -700.0f));
+		model = glm::scale(model, glm::vec3(15.0f));
+		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		pool.Draw(staticShader);
+
+		
+
+		/*
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-1800.0f, 0.5f, 1550.0f));
+		model = glm::scale(model, glm::vec3(35.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		house2.Draw(staticShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-1900.0f, 0.0f, 1250.0f));
+		model = glm::scale(model, glm::vec3(15.0f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		house4.Draw(staticShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-1850.0f, 0.0f, 1050.0f));
+		model = glm::scale(model, glm::vec3(1.5f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		house3.Draw(staticShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-1850.0f, 1.5f, 750.0f));
+		model = glm::scale(model, glm::vec3(0.015f));
+		//model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		house5.Draw(staticShader);*/
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-1600.0f, 100.0f, -2200.0f));
+		model = glm::scale(model, glm::vec3(12.0f));
+		staticShader.setMat4("model", model);
+		faro.Draw(staticShader);
+
+		
 
 		/*model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -70.0f));
 		model = glm::scale(model, glm::vec3(5.0f));
