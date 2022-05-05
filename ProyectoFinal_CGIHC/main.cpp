@@ -107,16 +107,20 @@ float	BMOposX = 0.0f,
 		BMOposZ = 0.0f,
 		rotBrazoDer = 0.0f,
 		rotBrazoIzq = 0.0f,
+		rotPiernaDer = 0.0f,
+		rotPiernaIzq = 0.0f,
 		giroBMO = 0.0f;
 float	incX = 0.0f,
 		incY = 0.0f,
 		incZ = 0.0f,
 		rotBrazoDerInc = 0.0f,
 		rotBrazoIzqInc = 0.0f,
+		rotPiernaDerInc = 0.0f,
+		rotPiernaIzqInc = 0.0f,
 		giroBMOInc = 0.0f;
 
 #define MAX_FRAMES 9
-int i_max_steps = 60;
+int i_max_steps = 25;
 int i_curr_steps = 0;
 typedef struct _frame
 {
@@ -125,6 +129,8 @@ typedef struct _frame
 			BMOposZ,
 			rotBrazoDer,
 			rotBrazoIzq,
+			rotPiernaDer,
+			rotPiernaIzq,
 			giroBMO;
 
 }FRAME;
@@ -137,7 +143,16 @@ int playIndex = 0;
 void saveFrame(void)
 {
 	//printf("frameindex %d\n", FrameIndex);
-	std::cout << "Frame Index = " << FrameIndex << std::endl;
+	cout << "Frame Index = " << FrameIndex << endl;
+	cout << "KeyFrame[" << FrameIndex << "].BMOposX = " << BMOposX << ";" << endl;
+	cout << "KeyFrame[" << FrameIndex << "].BMOposY = " << BMOposY << ";" << endl;
+	cout << "KeyFrame[" << FrameIndex << "].BMOposZ = " << BMOposZ << ";" << endl;
+	cout << "KeyFrame[" << FrameIndex << "].rotBrazoIzq = " << rotBrazoIzq << ";" << endl;
+	cout << "KeyFrame[" << FrameIndex << "].rotBrazoDer = " << rotBrazoDer << ";" << endl;
+	cout << "KeyFrame[" << FrameIndex << "].rotPiernaDer = " << rotPiernaDer << ";" << endl;
+	cout << "KeyFrame[" << FrameIndex << "].rotPiernaIzq = " << rotPiernaIzq << ";" << endl;
+	cout << "KeyFrame[" << FrameIndex << "].giroBMO = " << giroBMO << ";" << endl;
+
 
 	KeyFrame[FrameIndex].BMOposX = BMOposX;
 	KeyFrame[FrameIndex].BMOposY = BMOposY;
@@ -145,6 +160,8 @@ void saveFrame(void)
 
 	KeyFrame[FrameIndex].rotBrazoIzq = rotBrazoIzq;
 	KeyFrame[FrameIndex].rotBrazoDer = rotBrazoDer;
+	KeyFrame[FrameIndex].rotPiernaIzq = rotPiernaIzq;
+	KeyFrame[FrameIndex].rotPiernaDer = rotPiernaDer;
 	KeyFrame[FrameIndex].giroBMO = giroBMO;
 
 	FrameIndex++;
@@ -158,6 +175,8 @@ void resetElements(void)
 
 	rotBrazoIzq = KeyFrame[0].rotBrazoIzq;
 	rotBrazoDer = KeyFrame[0].rotBrazoDer;
+	rotPiernaIzq = KeyFrame[0].rotPiernaIzq;
+	rotPiernaDer = KeyFrame[0].rotPiernaDer;
 	giroBMO = KeyFrame[0].giroBMO;
 }
 
@@ -167,8 +186,10 @@ void interpolation(void)
 	incY = (KeyFrame[playIndex + 1].BMOposY - KeyFrame[playIndex].BMOposY) / i_max_steps;
 	incZ = (KeyFrame[playIndex + 1].BMOposZ - KeyFrame[playIndex].BMOposZ) / i_max_steps;
 
-	rotBrazoIzq = (KeyFrame[playIndex + 1].rotBrazoIzq - KeyFrame[playIndex].rotBrazoIzq) / i_max_steps;
-	rotBrazoDer = (KeyFrame[playIndex + 1].rotBrazoDer - KeyFrame[playIndex].rotBrazoDer) / i_max_steps;
+	rotBrazoIzqInc = (KeyFrame[playIndex + 1].rotBrazoIzq - KeyFrame[playIndex].rotBrazoIzq) / i_max_steps;
+	rotBrazoDerInc = (KeyFrame[playIndex + 1].rotBrazoDer - KeyFrame[playIndex].rotBrazoDer) / i_max_steps;
+	rotPiernaIzqInc = (KeyFrame[playIndex + 1].rotPiernaIzq - KeyFrame[playIndex].rotPiernaIzq) / i_max_steps;
+	rotPiernaDerInc = (KeyFrame[playIndex + 1].rotPiernaDer - KeyFrame[playIndex].rotPiernaDer) / i_max_steps;
 	giroBMOInc = (KeyFrame[playIndex + 1].giroBMO - KeyFrame[playIndex].giroBMO) / i_max_steps;
 
 }
@@ -203,6 +224,8 @@ void animate(void)
 
 			rotBrazoIzq += rotBrazoIzqInc;
 			rotBrazoDer += rotBrazoDerInc;
+			rotPiernaIzq += rotPiernaIzqInc;
+			rotPiernaDer += rotPiernaDerInc;
 			giroBMO += giroBMOInc;
 
 			i_curr_steps++;
@@ -415,11 +438,48 @@ int main()
 	//Inicialización de KeyFrames
 	for (int i = 0; i < MAX_FRAMES; i++)
 	{
-		KeyFrame[i].BMOposX = 0;
-		KeyFrame[i].BMOposY = 0;
-		KeyFrame[i].BMOposZ = 0;
-		KeyFrame[i].rotBrazoIzq = 0;
-		KeyFrame[i].giroBMO = 0;
+		// Baile pregrabado
+		KeyFrame[0].BMOposX = 65;
+		KeyFrame[0].BMOposY = 45;
+		KeyFrame[0].BMOposZ = -10;
+		KeyFrame[0].rotBrazoIzq = 40;
+		KeyFrame[0].rotBrazoDer = -47;
+		KeyFrame[0].rotPiernaDer = -91;
+		KeyFrame[0].rotPiernaIzq = -91;
+		KeyFrame[0].giroBMO = 0;
+		KeyFrame[1].BMOposX = 0;
+		KeyFrame[1].BMOposY = 45;
+		KeyFrame[1].BMOposZ = -35;
+		KeyFrame[1].rotBrazoIzq = -35;
+		KeyFrame[1].rotBrazoDer = -105;
+		KeyFrame[1].rotPiernaDer = -44;
+		KeyFrame[1].rotPiernaIzq = -91;
+		KeyFrame[1].giroBMO = 58;
+		KeyFrame[2].BMOposX = 0;
+		KeyFrame[2].BMOposY = 45;
+		KeyFrame[2].BMOposZ = -35;
+		KeyFrame[2].rotBrazoIzq = -105;
+		KeyFrame[2].rotBrazoDer = -105;
+		KeyFrame[2].rotPiernaDer = -89;
+		KeyFrame[2].rotPiernaIzq = -37;
+		KeyFrame[2].giroBMO = 90;
+		KeyFrame[3].BMOposX = -70;
+		KeyFrame[3].BMOposY = 45;
+		KeyFrame[3].BMOposZ = -25;
+		KeyFrame[3].rotBrazoIzq = 87;
+		KeyFrame[3].rotBrazoDer = 85;
+		KeyFrame[3].rotPiernaDer = -89;
+		KeyFrame[3].rotPiernaIzq = -91;
+		KeyFrame[3].giroBMO = 13;
+		KeyFrame[4].BMOposX = -70;
+		KeyFrame[4].BMOposY = 0;
+		KeyFrame[4].BMOposZ = -25;
+		KeyFrame[4].rotBrazoIzq = 87;
+		KeyFrame[4].rotBrazoDer = 84.9999;
+		KeyFrame[4].rotPiernaDer = 0.999969;
+		KeyFrame[4].rotPiernaIzq = 1;
+		KeyFrame[4].giroBMO = 13;
+		FrameIndex = 5;
 	}
 
 	// draw in wireframe
@@ -777,24 +837,27 @@ int main()
 		staticShader.setMat4("model", model);
 		bmo.Draw(staticShader);
 		// Pierna Izq
-		model = glm::translate(tmp, glm::vec3(10.0f, -29.5f, 15.0f));
-		//model = glm::rotate(model, glm::radians(giroBMO), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(tmp, glm::vec3(8.0f, -27.5f, -2.0f));
+		model = glm::rotate(model, glm::radians(rotPiernaIzq), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(2.0f, -2.0f, -13.0f));
 		staticShader.setMat4("model", model);
 		brazoBMO.Draw(staticShader);
 		// Pierna Der
-		model = glm::translate(tmp, glm::vec3(-10.0f, -29.5f, -15.0f));
-		//model = glm::rotate(model, glm::radians(giroBMO), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(tmp, glm::vec3(-8.0f, -27.5f, -2.0f));
+		model = glm::rotate(model, glm::radians(rotPiernaDer), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-2.0f, -2.0f, -13.0f));
 		staticShader.setMat4("model", model);
 		brazoBMO.Draw(staticShader);
 		// Brazo Izq
-		model = glm::translate(tmp, glm::vec3(20.0f, -23.0f, 0.0f));
+		model = glm::translate(tmp, glm::vec3(20.0f, -18.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(rotBrazoIzq), glm::vec3(1.0f, 0.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(2.0f,2.0f, -15.0f));
+		model = glm::translate(model, glm::vec3(2.0f, -2.0f, -15.0f));
 		staticShader.setMat4("model", model);
 		brazoBMO.Draw(staticShader);
 		// Brazo Der
-		model = glm::translate(tmp, glm::vec3(-22.0f, -29.5f, -15.0f));
-		//model = glm::rotate(model, glm::radians(giroBMO), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(tmp, glm::vec3(-20.0f, -18.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotBrazoDer), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-2.0f, -2.0f, -15.0f));
 		staticShader.setMat4("model", model);
 		brazoBMO.Draw(staticShader);
 
@@ -843,29 +906,38 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera.ProcessKeyboard(RIGHT, (float)deltaTime + 50);
 	//To Configure Model
-	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_KP_0) == GLFW_PRESS)
 		BMOposZ += 5.0f;
-	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_KP_1) == GLFW_PRESS)
 		BMOposZ -= 5.0f;
-	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_KP_2) == GLFW_PRESS)
 		BMOposX -= 5.0f;
-	if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_KP_3) == GLFW_PRESS)
 		BMOposX += 5.0f;
-	if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_KP_ADD) == GLFW_PRESS)
+		BMOposY += 5.0f;
+	if (glfwGetKey(window, GLFW_KEY_KP_SUBTRACT) == GLFW_PRESS)
+		BMOposY -= 5.0f;
+	if (glfwGetKey(window, GLFW_KEY_KP_4) == GLFW_PRESS)
 		rotBrazoIzq--;
-	if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_KP_5) == GLFW_PRESS)
 		rotBrazoIzq++;
-	if (glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_KP_6) == GLFW_PRESS)
+		rotBrazoDer--;
+	if (glfwGetKey(window, GLFW_KEY_KP_7) == GLFW_PRESS)
+		rotBrazoDer++;
+	if (glfwGetKey(window, GLFW_KEY_KP_DIVIDE) == GLFW_PRESS && rotPiernaDer >= -90)
+		rotPiernaDer--;
+	if (glfwGetKey(window, GLFW_KEY_KP_MULTIPLY) == GLFW_PRESS && rotPiernaDer <= 0)
+		rotPiernaDer++;
+	if (glfwGetKey(window, GLFW_KEY_KP_8) == GLFW_PRESS && rotPiernaIzq >= -90)
+		rotPiernaIzq--;
+	if (glfwGetKey(window, GLFW_KEY_KP_9) == GLFW_PRESS && rotPiernaIzq <= 0)
+		rotPiernaIzq++;
+	if (glfwGetKey(window, GLFW_KEY_PAGE_UP) == GLFW_PRESS)
 		giroBMO--;
-	if (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_PAGE_DOWN) == GLFW_PRESS)
 		giroBMO++;
-
-	if (key == GLFW_KEY_0 && action == GLFW_PRESS)
-	{
-		cout << "X = " << BMOposX << endl;
-		cout << "Y = " << BMOposY << endl;
-		cout << "Z = " << BMOposZ << endl;
-	}
 
 
 	if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
