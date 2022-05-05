@@ -1,2 +1,6 @@
 PlatformToolSet=v142:VCToolArchitecture=Native32Bit:VCToolsVersion=14.29.30133:VCServicingVersionCrtHeaders=14.29.30136:TargetPlatformVersion=10.0.19041.0:
+<<<<<<< HEAD
 Debug|Win32|D:\semestre actual\ProyectoFinal_CGIHC\|
+=======
+Debug|Win32|D:\amogu\Documents\UNAM\semestre8\CompuGrafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\|
+>>>>>>> 427769236d10c4a4cec8a3d1ed460a61c7655f92
