@@ -16,6 +16,7 @@
 #include <time.h>
 
 
+
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>	//Texture
 
@@ -99,8 +100,21 @@ dibuja_ritual = true,
 dibuja_anti_ritual = true,
 dibuja_union_ritual = false;
 
-bool derretir_helado = false;
 
+//Variables de control helado
+bool derretir_helado = false;
+int helado_opt = 0;
+int cont_galleta = 0;
+bool existe_charco = false;
+
+//Variables de modificacion helado
+float y_gota = 3.5f;
+float pos_gota = -230.0f;
+float ancho_gota = 3.5f;
+float ancho_galleta = 0.7f;
+float relleno_y = -200.0f;
+float ancho_charco = 2.0f;
+float y_tapa = -200.0f;
 
 //Keyframes (Manipulación y dibujo)
 float	posX = 0.0f,
@@ -277,6 +291,57 @@ void animate(void)
 		rituales_escala = 2.0;
 	}
 
+	if (derretir_helado) {
+
+		
+		if (pos_gota >= -270.0f && helado_opt == 0) {
+			pos_gota = pos_gota - 0.2;
+			y_gota = y_gota + 0.02;
+		}
+
+		if (pos_gota <= -270.0f && helado_opt == 0) {
+			y_gota = 3.5f;
+			helado_opt = 1;
+		}
+
+		if (pos_gota >= -290.0f && helado_opt == 1) {
+			pos_gota = pos_gota - 0.2;
+		}
+
+		if (pos_gota <= -290.0f && helado_opt == 1) {
+			y_gota = 0.01;
+			ancho_gota = 15.0f;
+			existe_charco = true;
+			cont_galleta++;
+		}
+
+		if (ancho_gota >= 15 && cont_galleta < 3) {
+			ancho_galleta = ancho_galleta - 0.1;
+			y_tapa = y_tapa - 3.0;
+			relleno_y = relleno_y + 1.0f;
+			helado_opt = 0;
+			y_gota = 3.5f;
+			pos_gota = -230.0f;
+			ancho_gota = 3.5f;
+			ancho_charco = ancho_charco + 2.0f;
+		}
+
+
+		if (cont_galleta >= 3) {
+			helado_opt = 0;
+			cont_galleta = 0;
+			existe_charco = false;
+			y_gota = 3.5f;
+			pos_gota = -230.0f;
+			ancho_gota = 3.5f;
+			ancho_galleta = 0.7f;
+			relleno_y = -200.0f;
+			ancho_charco = 2.0f;
+			y_tapa = -200.0f;
+			derretir_helado = false;
+		}
+	}
+
 }
 
 void getResolution()
@@ -290,6 +355,7 @@ void getResolution()
 
 int main()
 {
+	bool played = sndPlaySound("resources/music/soy_un_cometa.wav", SND_ASYNC);
 	// glfw: initialize and configure
 	// ------------------------------
 	glfwInit();
@@ -306,7 +372,6 @@ int main()
 	// --------------------
 	monitors = glfwGetPrimaryMonitor();
 	getResolution();
-
 	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "CGeIHC", NULL, NULL);
 	if (window == NULL)
 	{
@@ -387,6 +452,7 @@ int main()
 	Model base_cat("resources/objects/gato_galleta/base/base.obj");
 	Model relleno_cat("resources/objects/gato_galleta/relleno/relleno.obj");
 	Model gota_cat("resources/objects/gato_galleta/gota/gota.obj");
+	Model charco_cat("resources/objects/gato_galleta/charco/charco.obj");
 	//Model piernaDer("resources/objects/Personaje/piernader.obj");
 	//Model piernaIzq("resources/objects/Personaje/piernader.obj");
 	//Model torso("resources/objects/Personaje/torso.obj");
@@ -716,20 +782,40 @@ int main()
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(3000.0f, -200.0f, -300.0f));
 		model = glm::scale(model, glm::vec3(0.7));
+		model = glm::rotate(model, glm::radians(30.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 		staticShader.setMat4("model", model);
 		base_cat.Draw(staticShader);
 
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(3000.0f, -200.0f, -300.0f));
-		model = glm::scale(model, glm::vec3(0.7));
+		model = glm::translate(model, glm::vec3(3000.0f, relleno_y, -300.0f));
+		model = glm::rotate(model, glm::radians(30.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::scale(model, glm::vec3(0.7f,ancho_galleta,0.7f));
 		staticShader.setMat4("model", model);
 		relleno_cat.Draw(staticShader);
 
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(3000.0f, -200.8f, -300.0f));
+		model = glm::translate(model, glm::vec3(3000.0f, y_tapa, -300.0f));
 		model = glm::scale(model, glm::vec3(0.7));
+		model = glm::rotate(model, glm::radians(30.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 		staticShader.setMat4("model", model);
 		tapa_cat.Draw(staticShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(2890.0f, pos_gota, -300.0f));
+		model = glm::scale(model, glm::vec3(ancho_gota,y_gota,ancho_gota));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		gota_cat.Draw(staticShader);
+
+		if (existe_charco) {
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(2910.0f, -285.0f, -290.0f));
+			model = glm::scale(model, glm::vec3(ancho_charco, 1.0f, ancho_charco));
+			staticShader.setMat4("model", model);
+			charco_cat.Draw(staticShader);
+		}
+	
+		
 
 		/*
 		model = glm::mat4(1.0f);
@@ -827,7 +913,8 @@ int main()
 
 		////Pierna Izq
 		//model = glm::translate(tmp, glm::vec3(0.5f, 0.0f, -0.1f));
-		//model = glm::rotate(model, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//
+		// model = glm::rotate(model, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		//staticShader.setMat4("model", model);
 		//piernaIzq.Draw(staticShader);
 
@@ -876,7 +963,7 @@ int main()
 		skyboxShader.use();
 		skybox.Draw(skyboxShader, view, projection, camera);
 
-		// Limitar el framerate a 60
+		// Limitar el framerate a 603
 		deltaTime = SDL_GetTicks() - lastFrame; // time for full 1 loop
 		//std::cout <<"frame time = " << frameTime << " milli sec"<< std::endl;
 		if (deltaTime < LOOP_TIME)
@@ -935,8 +1022,12 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 		abducir ^= true;
 	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
 		hacer_ritual ^= true;
-	if (key == GLFW_KEY_1 && action == GLFW_PRESS)
+
+	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
 		derretir_helado ^= true;
+
+
+	
 
 	//Car animation
 	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
