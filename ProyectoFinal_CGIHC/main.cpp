@@ -99,6 +99,8 @@ dibuja_ritual = true,
 dibuja_anti_ritual = true,
 dibuja_union_ritual = false;
 
+bool derretir_helado = false;
+
 
 //Keyframes (Manipulación y dibujo)
 float	posX = 0.0f,
@@ -381,7 +383,10 @@ int main()
 	Model ritual("resources/objects/ritual/ritual.obj");
 	Model anti_ritual("resources/objects/anti-ritual/anti-ritual.obj");
 	Model union_ritual("resources/objects/union-ritual/union-ritual.obj");
-	//Model botaDer("resources/objects/Personaje/bota.obj");
+	Model tapa_cat("resources/objects/gato_galleta/tapa/tapa.obj");
+	Model base_cat("resources/objects/gato_galleta/base/base.obj");
+	Model relleno_cat("resources/objects/gato_galleta/relleno/relleno.obj");
+	Model gota_cat("resources/objects/gato_galleta/gota/gota.obj");
 	//Model piernaDer("resources/objects/Personaje/piernader.obj");
 	//Model piernaIzq("resources/objects/Personaje/piernader.obj");
 	//Model torso("resources/objects/Personaje/torso.obj");
@@ -634,7 +639,6 @@ int main()
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(200.0f, 90.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(30.0f, 20.0f, 50.0f));
-		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		staticShader.setMat4("model", model);
 		center.Draw(staticShader);
 
@@ -708,6 +712,24 @@ int main()
 			staticShader.setMat4("model", model);
 			union_ritual.Draw(staticShader);
 		}
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(3000.0f, -200.0f, -300.0f));
+		model = glm::scale(model, glm::vec3(0.7));
+		staticShader.setMat4("model", model);
+		base_cat.Draw(staticShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(3000.0f, -200.0f, -300.0f));
+		model = glm::scale(model, glm::vec3(0.7));
+		staticShader.setMat4("model", model);
+		relleno_cat.Draw(staticShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(3000.0f, -200.8f, -300.0f));
+		model = glm::scale(model, glm::vec3(0.7));
+		staticShader.setMat4("model", model);
+		tapa_cat.Draw(staticShader);
 
 		/*
 		model = glm::mat4(1.0f);
@@ -913,6 +935,8 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 		abducir ^= true;
 	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
 		hacer_ritual ^= true;
+	if (key == GLFW_KEY_1 && action == GLFW_PRESS)
+		derretir_helado ^= true;
 
 	//Car animation
 	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
