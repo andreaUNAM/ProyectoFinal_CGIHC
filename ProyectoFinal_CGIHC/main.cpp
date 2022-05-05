@@ -101,28 +101,31 @@ dibuja_union_ritual = false;
 
 
 //Keyframes (Manipulación y dibujo)
-float	posX = 0.0f,
-posY = 0.0f,
-posZ = 0.0f,
-rotRodIzq = 0.0f,
-giroMonito = 0.0f;
+// Movimiento BMO
+float	BMOposX = 0.0f,
+		BMOposY = 0.0f,
+		BMOposZ = 0.0f,
+		rotBrazoDer = 0.0f,
+		rotBrazoIzq = 0.0f,
+		giroBMO = 0.0f;
 float	incX = 0.0f,
-incY = 0.0f,
-incZ = 0.0f,
-rotInc = 0.0f,
-giroMonitoInc = 0.0f;
+		incY = 0.0f,
+		incZ = 0.0f,
+		rotBrazoDerInc = 0.0f,
+		rotBrazoIzqInc = 0.0f,
+		giroBMOInc = 0.0f;
 
 #define MAX_FRAMES 9
 int i_max_steps = 60;
 int i_curr_steps = 0;
 typedef struct _frame
 {
-	//Variables para GUARDAR Key Frames
-	float posX;		//Variable para PosicionX
-	float posY;		//Variable para PosicionY
-	float posZ;		//Variable para PosicionZ
-	float rotRodIzq;
-	float giroMonito;
+	float	BMOposX,
+			BMOposY,
+			BMOposZ,
+			rotBrazoDer,
+			rotBrazoIzq,
+			giroBMO;
 
 }FRAME;
 
@@ -136,34 +139,37 @@ void saveFrame(void)
 	//printf("frameindex %d\n", FrameIndex);
 	std::cout << "Frame Index = " << FrameIndex << std::endl;
 
-	KeyFrame[FrameIndex].posX = posX;
-	KeyFrame[FrameIndex].posY = posY;
-	KeyFrame[FrameIndex].posZ = posZ;
+	KeyFrame[FrameIndex].BMOposX = BMOposX;
+	KeyFrame[FrameIndex].BMOposY = BMOposY;
+	KeyFrame[FrameIndex].BMOposZ = BMOposZ;
 
-	KeyFrame[FrameIndex].rotRodIzq = rotRodIzq;
-	KeyFrame[FrameIndex].giroMonito = giroMonito;
+	KeyFrame[FrameIndex].rotBrazoIzq = rotBrazoIzq;
+	KeyFrame[FrameIndex].rotBrazoDer = rotBrazoDer;
+	KeyFrame[FrameIndex].giroBMO = giroBMO;
 
 	FrameIndex++;
 }
 
 void resetElements(void)
 {
-	posX = KeyFrame[0].posX;
-	posY = KeyFrame[0].posY;
-	posZ = KeyFrame[0].posZ;
+	BMOposX = KeyFrame[0].BMOposX;
+	BMOposY = KeyFrame[0].BMOposY;
+	BMOposZ = KeyFrame[0].BMOposZ;
 
-	rotRodIzq = KeyFrame[0].rotRodIzq;
-	giroMonito = KeyFrame[0].giroMonito;
+	rotBrazoIzq = KeyFrame[0].rotBrazoIzq;
+	rotBrazoDer = KeyFrame[0].rotBrazoDer;
+	giroBMO = KeyFrame[0].giroBMO;
 }
 
 void interpolation(void)
 {
-	incX = (KeyFrame[playIndex + 1].posX - KeyFrame[playIndex].posX) / i_max_steps;
-	incY = (KeyFrame[playIndex + 1].posY - KeyFrame[playIndex].posY) / i_max_steps;
-	incZ = (KeyFrame[playIndex + 1].posZ - KeyFrame[playIndex].posZ) / i_max_steps;
+	incX = (KeyFrame[playIndex + 1].BMOposX - KeyFrame[playIndex].BMOposX) / i_max_steps;
+	incY = (KeyFrame[playIndex + 1].BMOposY - KeyFrame[playIndex].BMOposY) / i_max_steps;
+	incZ = (KeyFrame[playIndex + 1].BMOposZ - KeyFrame[playIndex].BMOposZ) / i_max_steps;
 
-	rotInc = (KeyFrame[playIndex + 1].rotRodIzq - KeyFrame[playIndex].rotRodIzq) / i_max_steps;
-	giroMonitoInc = (KeyFrame[playIndex + 1].giroMonito - KeyFrame[playIndex].giroMonito) / i_max_steps;
+	rotBrazoIzq = (KeyFrame[playIndex + 1].rotBrazoIzq - KeyFrame[playIndex].rotBrazoIzq) / i_max_steps;
+	rotBrazoDer = (KeyFrame[playIndex + 1].rotBrazoDer - KeyFrame[playIndex].rotBrazoDer) / i_max_steps;
+	giroBMOInc = (KeyFrame[playIndex + 1].giroBMO - KeyFrame[playIndex].giroBMO) / i_max_steps;
 
 }
 
@@ -191,12 +197,13 @@ void animate(void)
 		else
 		{
 			//Draw animation
-			posX += incX;
-			posY += incY;
-			posZ += incZ;
+			BMOposX += incX;
+			BMOposY += incY;
+			BMOposZ += incZ;
 
-			rotRodIzq += rotInc;
-			giroMonito += giroMonitoInc;
+			rotBrazoIzq += rotBrazoIzqInc;
+			rotBrazoDer += rotBrazoDerInc;
+			giroBMO += giroBMOInc;
 
 			i_curr_steps++;
 		}
@@ -359,9 +366,11 @@ int main()
 
 	// load models
 	// -----------
+	// Elementos del escenario
 	Model mar("resources/objects/mar/mar.obj");
 	Model playa("resources/objects/playa/playa.obj");
 	Model piso("resources/objects/piso/piso.obj");
+	// Edificios
 	Model house2("resources/objects/house2/house2.obj");
 	Model house4("resources/objects/house4/house4.obj");
 	Model faro("resources/objects/Lighthouse/lighthouse.obj");
@@ -374,10 +383,13 @@ int main()
 	Model house3_2("resources/objects/House3_2/casaAzul.obj");
 	Model house3_3("resources/objects/House3_3/casaVerde.obj");
 	Model kiosko("resources/objects/kiosko/kiosko.obj");
-	Model bmo("resources/objects/bmo/bmo.obj");
 	Model pool("resources/objects/pool/pool.obj");
+	// Personajes
+	Model bmo("resources/objects/bmo/bmo.obj");
+	Model brazoBMO("resources/objects/bmo/limb.obj");
 	Model cow("resources/objects/cow/cow.obj");
 	Model roaming_eye("resources/objects/roaming_eye/roaming_eye.obj");
+	// Ritual Maldito
 	Model ritual("resources/objects/ritual/ritual.obj");
 	Model anti_ritual("resources/objects/anti-ritual/anti-ritual.obj");
 	Model union_ritual("resources/objects/union-ritual/union-ritual.obj");
@@ -403,11 +415,11 @@ int main()
 	//Inicialización de KeyFrames
 	for (int i = 0; i < MAX_FRAMES; i++)
 	{
-		KeyFrame[i].posX = 0;
-		KeyFrame[i].posY = 0;
-		KeyFrame[i].posZ = 0;
-		KeyFrame[i].rotRodIzq = 0;
-		KeyFrame[i].giroMonito = 0;
+		KeyFrame[i].BMOposX = 0;
+		KeyFrame[i].BMOposY = 0;
+		KeyFrame[i].BMOposZ = 0;
+		KeyFrame[i].rotBrazoIzq = 0;
+		KeyFrame[i].giroBMO = 0;
 	}
 
 	// draw in wireframe
@@ -531,6 +543,7 @@ int main()
 		staticShader.setMat4("model", model);
 		piso.Draw(staticShader);
 
+		// Coloca las casas
 		float p = 0;
 		float r = 0;
 		for (int j = 0; j < 3; j++) {
@@ -623,7 +636,7 @@ int main()
 			r = r - 1200.0;
 		}
 
-
+		// Motel
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(-500.0f, 6.0f, -2000.0f));
 		model = glm::scale(model, glm::vec3(0.7f));
@@ -631,6 +644,7 @@ int main()
 		staticShader.setMat4("model", model);
 		motel.Draw(staticShader);
 
+		// Centro Pokemón 1
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(200.0f, 90.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(30.0f, 20.0f, 50.0f));
@@ -638,6 +652,7 @@ int main()
 		staticShader.setMat4("model", model);
 		center.Draw(staticShader);
 
+		// Centro Pokemón 2
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(800.0f, 90.0f, -2000.0f));
 		model = glm::scale(model, glm::vec3(50.0f, 20.0f, 30.0f));
@@ -645,6 +660,7 @@ int main()
 		staticShader.setMat4("model", model);
 		center.Draw(staticShader);
 
+		// Motel 2
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(800.0f, 6.0f, 1500.0f));
 		model = glm::scale(model, glm::vec3(0.8f));
@@ -652,6 +668,7 @@ int main()
 		staticShader.setMat4("model", model);
 		motel.Draw(staticShader);
 
+		// Kiosko
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(550.0f, 410.0f, 800.0f));
 		model = glm::scale(model, glm::vec3(3.0f));
@@ -659,6 +676,7 @@ int main()
 		staticShader.setMat4("model", model);
 		kiosko.Draw(staticShader);
 
+		// Alberca
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(400.0f, -500.0f, -700.0f));
 		model = glm::scale(model, glm::vec3(15.0f));
@@ -666,6 +684,7 @@ int main()
 		staticShader.setMat4("model", model);
 		pool.Draw(staticShader);
 
+		// Vaca
 		if (dibujaJose) {
 			model = glm::mat4(1.0f);
 			model = glm::translate(model, glm::vec3(joseX, joseY, joseZ));
@@ -675,6 +694,7 @@ int main()
 			cow.Draw(staticShader);
 		}
 
+		// Nave
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(roamingX, roamingY, roamingZ));
 		model = glm::scale(model, glm::vec3(80.0f));
@@ -682,6 +702,7 @@ int main()
 		staticShader.setMat4("model", model);
 		roaming_eye.Draw(staticShader);
 
+		// Ritual
 		if (dibuja_ritual) {
 			model = glm::mat4(1.0f);
 			model = glm::translate(model, glm::vec3(2000, -100, ritualZ));
@@ -691,6 +712,7 @@ int main()
 			ritual.Draw(staticShader);
 		}
 
+		// Antiritual
 		if (dibuja_anti_ritual) {
 			model = glm::mat4(1.0f);
 			model = glm::translate(model, glm::vec3(2000, -100, anti_ritualZ));
@@ -700,6 +722,7 @@ int main()
 			anti_ritual.Draw(staticShader);
 		}
 
+		// Unión ritual
 		if (dibuja_union_ritual) {
 			model = glm::mat4(1.0f);
 			model = glm::translate(model, glm::vec3(union_ritualX, -100, -300));
@@ -738,112 +761,43 @@ int main()
 		staticShader.setMat4("model", model);
 		house5.Draw(staticShader);*/
 
+
+		// Faro
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(-1600.0f, 100.0f, -2200.0f));
 		model = glm::scale(model, glm::vec3(12.0f));
 		staticShader.setMat4("model", model);
 		faro.Draw(staticShader);
 
-
-
-		/*model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -70.0f));
-		model = glm::scale(model, glm::vec3(5.0f));
+		// BMO
+		// Cuerpo
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(775 + BMOposX, 31.5 + BMOposY, 25 + BMOposZ));
+		tmp = model = glm::rotate(model, glm::radians(giroBMO), glm::vec3(0.0f, 1.0f, 0.0f));
 		staticShader.setMat4("model", model);
-		casaVieja.Draw(staticShader);*/
-
-		// -------------------------------------------------------------------------------------------------------------------------
-		// Carro
-		// -------------------------------------------------------------------------------------------------------------------------
-		//model = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::translate(model, glm::vec3(15.0f + movAuto_x, -1.0f, movAuto_z));
-		//tmp = model = glm::rotate(model, glm::radians(orienta), glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-		//staticShader.setMat4("model", model);
-		//carro.Draw(staticShader);
-
-		//model = glm::translate(tmp, glm::vec3(8.5f, 2.5f, 12.9f));
-		//model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-		//staticShader.setMat4("model", model);
-		//llanta.Draw(staticShader);	//Izq delantera
-
-		//model = glm::translate(tmp, glm::vec3(-8.5f, 2.5f, 12.9f));
-		//model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-		//model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		//staticShader.setMat4("model", model);
-		//llanta.Draw(staticShader);	//Der delantera
-
-		//model = glm::translate(tmp, glm::vec3(-8.5f, 2.5f, -14.5f));
-		//model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-		//model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		//staticShader.setMat4("model", model);
-		//llanta.Draw(staticShader);	//Der trasera
-
-		//model = glm::translate(tmp, glm::vec3(8.5f, 2.5f, -14.5f));
-		//model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-		//staticShader.setMat4("model", model);
-		//llanta.Draw(staticShader);	//Izq trase
-		// -------------------------------------------------------------------------------------------------------------------------
-		// Personaje
-		// -------------------------------------------------------------------------------------------------------------------------
-		//model = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
-		//model = glm::translate(model, glm::vec3(posX, posY, posZ));
-		//tmp = model = glm::rotate(model, glm::radians(giroMonito), glm::vec3(0.0f, 1.0f, 0.0));
-		//staticShader.setMat4("model", model);
-		//torso.Draw(staticShader);
-
-		////Pierna Der
-		//model = glm::translate(tmp, glm::vec3(-0.5f, 0.0f, -0.1f));
-		//model = glm::rotate(model, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0));
-		//model = glm::rotate(model, glm::radians(-rotRodIzq), glm::vec3(1.0f, 0.0f, 0.0f));
-		//staticShader.setMat4("model", model);
-		//piernaDer.Draw(staticShader);
-
-		////Pie Der
-		//model = glm::translate(model, glm::vec3(0, -0.9f, -0.2f));
-		//staticShader.setMat4("model", model);
-		//botaDer.Draw(staticShader);
-
-		////Pierna Izq
-		//model = glm::translate(tmp, glm::vec3(0.5f, 0.0f, -0.1f));
-		//model = glm::rotate(model, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		//staticShader.setMat4("model", model);
-		//piernaIzq.Draw(staticShader);
-
-		////Pie Iz
-		//model = glm::translate(model, glm::vec3(0, -0.9f, -0.2f));
-		//staticShader.setMat4("model", model);
-		//botaDer.Draw(staticShader);	//Izq trase
-
-		////Brazo derecho
-		//model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.0f));
-		//model = glm::translate(model, glm::vec3(-0.75f, 2.5f, 0));
-		//model = glm::rotate(model, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		//staticShader.setMat4("model", model);
-		//brazoDer.Draw(staticShader);
-
-		////Brazo izquierdo
-		//model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.0f));
-		//model = glm::translate(model, glm::vec3(0.75f, 2.5f, 0));
-		//model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-		//staticShader.setMat4("model", model);
-		//brazoIzq.Draw(staticShader);
-
-		////Cabeza
-		//model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.0f));
-		//model = glm::rotate(model, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0));
-		//model = glm::translate(model, glm::vec3(0.0f, 2.5f, 0));
-		//staticShader.setMat4("model", model);
-		//cabeza.Draw(staticShader);
-		// -------------------------------------------------------------------------------------------------------------------------
-		// Caja Transparente --- Siguiente Práctica
-		// -------------------------------------------------------------------------------------------------------------------------
-		/*glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -70.0f));
-		model = glm::scale(model, glm::vec3(5.0f));
+		bmo.Draw(staticShader);
+		// Pierna Izq
+		model = glm::translate(tmp, glm::vec3(10.0f, -29.5f, 15.0f));
+		//model = glm::rotate(model, glm::radians(giroBMO), glm::vec3(0.0f, 1.0f, 0.0f));
 		staticShader.setMat4("model", model);
-		cubo.Draw(staticShader);
-		glEnable(GL_BLEND);*/
+		brazoBMO.Draw(staticShader);
+		// Pierna Der
+		model = glm::translate(tmp, glm::vec3(-10.0f, -29.5f, -15.0f));
+		//model = glm::rotate(model, glm::radians(giroBMO), glm::vec3(0.0f, 1.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		brazoBMO.Draw(staticShader);
+		// Brazo Izq
+		model = glm::translate(tmp, glm::vec3(20.0f, -23.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotBrazoIzq), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(2.0f,2.0f, -15.0f));
+		staticShader.setMat4("model", model);
+		brazoBMO.Draw(staticShader);
+		// Brazo Der
+		model = glm::translate(tmp, glm::vec3(-22.0f, -29.5f, -15.0f));
+		//model = glm::rotate(model, glm::radians(giroBMO), glm::vec3(0.0f, 1.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		brazoBMO.Draw(staticShader);
+
 		// -------------------------------------------------------------------------------------------------------------------------
 		// Termina Escenario
 		// -------------------------------------------------------------------------------------------------------------------------
@@ -889,22 +843,31 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera.ProcessKeyboard(RIGHT, (float)deltaTime + 50);
 	//To Configure Model
-	if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
-		posZ++;
-	if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
-		posZ--;
-	if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
-		posX--;
-	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
-		posX++;
-	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
-		rotRodIzq--;
-	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
-		rotRodIzq++;
-	if (glfwGetKey(window, GLFW_KEY_V) == GLFW_PRESS)
-		giroMonito--;
-	if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS)
-		giroMonito++;
+	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+		BMOposZ += 5.0f;
+	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+		BMOposZ -= 5.0f;
+	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
+		BMOposX -= 5.0f;
+	if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
+		BMOposX += 5.0f;
+	if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS)
+		rotBrazoIzq--;
+	if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS)
+		rotBrazoIzq++;
+	if (glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS)
+		giroBMO--;
+	if (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS)
+		giroBMO++;
+
+	if (key == GLFW_KEY_0 && action == GLFW_PRESS)
+	{
+		cout << "X = " << BMOposX << endl;
+		cout << "Y = " << BMOposY << endl;
+		cout << "Z = " << BMOposZ << endl;
+	}
+
+
 	if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
 		lightPosition.x++;
 	if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS)
