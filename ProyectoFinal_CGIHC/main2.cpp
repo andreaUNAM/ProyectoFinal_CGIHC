@@ -82,10 +82,10 @@ deltaRoamingY = 0.0,
 rotarJose = 0.0;
 //Variables de cambio de los rituales
 float ritualZ = -800.0,
-	  anti_ritualZ = 200.0,
-	  union_ritualX = 2000.0,
-	  rituales_escala = 2.0,
-	  ritual_rot = 0.0;
+anti_ritualZ = 200.0,
+union_ritualX = 2000.0,
+rituales_escala = 2.0,
+ritual_rot = 0.0;
 bool	animacion = false,
 recorrido1 = true,
 recorrido2 = false,
@@ -94,7 +94,7 @@ recorrido4 = false,
 dibujaJose = true,
 abducir = false,
 cambiaTrayectoriaNave = false,
-hacer_ritual = false, 
+hacer_ritual = false,
 dibuja_ritual = true,
 dibuja_anti_ritual = true,
 dibuja_union_ritual = false;
@@ -228,7 +228,7 @@ void animate(void)
 				if (rotarJose < 90.0) {
 					rotarJose++;
 				}
-				
+
 			}
 		}
 		if (cambiaTrayectoriaNave) {
@@ -248,14 +248,14 @@ void animate(void)
 		deltaJose = 0.0f;
 		deltaRadio = 1.0f;
 		roamingX = 1500,
-		roamingZ = -800,
-		roamingY = 500;
+			roamingZ = -800,
+			roamingY = 500;
 		rotarJose = 0.0f;
 	}
 
 	if (hacer_ritual) {
 		if (ritualZ < anti_ritualZ) {
-			rituales_escala+=0.2;
+			rituales_escala += 0.2;
 			ritualZ += 5;
 			anti_ritualZ -= 5;
 		}
@@ -263,7 +263,7 @@ void animate(void)
 			dibuja_ritual = false;
 			dibuja_anti_ritual = false;
 			dibuja_union_ritual = true;
-			union_ritualX += 20;
+			union_ritualX += 40;
 		}
 	}
 	else {
@@ -381,18 +381,7 @@ int main()
 	Model ritual("resources/objects/ritual/ritual.obj");
 	Model anti_ritual("resources/objects/anti-ritual/anti-ritual.obj");
 	Model union_ritual("resources/objects/union-ritual/union-ritual.obj");
-	//Model botaDer("resources/objects/Personaje/bota.obj");
-	//Model piernaDer("resources/objects/Personaje/piernader.obj");
-	//Model piernaIzq("resources/objects/Personaje/piernader.obj");
-	//Model torso("resources/objects/Personaje/torso.obj");
-	//Model brazoDer("resources/objects/Personaje/brazoder.obj");
-	//Model brazoIzq("resources/objects/Personaje/brazoizq.obj");
-	//Model cabeza("resources/objects/Personaje/cabeza.obj");
-	//Model carro("resources/objects/lambo/carroceria.obj");
-	//Model llanta("resources/objects/lambo/Wheel.obj");
-	//Model casaVieja("resources/objects/casa/OldHouse.obj");
-	////Model cubo("resources/objects/cubo/cube02.obj");
-	//Model casaDoll("resources/objects/casa/DollHouse.obj");
+	Model voodoDoll("resources/objects/VoodooDoll/VoodooDoll.obj");
 
 	//ModelAnim animacionPersonaje("resources/objects/Personaje1/PersonajeBrazo.dae");
 	//animacionPersonaje.initShaders(animShader.ID);
@@ -685,7 +674,7 @@ int main()
 		if (dibuja_ritual) {
 			model = glm::mat4(1.0f);
 			model = glm::translate(model, glm::vec3(2000, -100, ritualZ));
-			model = glm::scale(model, glm::vec3(rituales_escala));
+			model = glm::scale(model, glm::vec3(rituales_escala*5/6));
 			//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 			staticShader.setMat4("model", model);
 			ritual.Draw(staticShader);
@@ -743,6 +732,12 @@ int main()
 		model = glm::scale(model, glm::vec3(12.0f));
 		staticShader.setMat4("model", model);
 		faro.Draw(staticShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(2200.0f, -100.0f, -2200.0f));
+		model = glm::scale(model, glm::vec3(.1f));
+		staticShader.setMat4("model", model);
+		voodoDoll.Draw(staticShader);
 
 
 
