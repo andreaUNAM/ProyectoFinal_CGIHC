@@ -114,9 +114,11 @@ float y_tapa = -200.0f;
 
 // Movimiento del coche de Steven
 float movX_coche1 = 0.0f, movZ_coche1 = 0.0f, giroCoche1 = 0.0f;
+float giroLlanta1 = 0.0f;
 int edoCoche1 = 0;
 // Movimiento del coche voxel
-float movX_coche2 = 0.0f, movZ_coche2 = 0.0f, giroCoche2 = 0.0f;
+float movX_coche2 = 0.0f, movY_coche2 = 0.0f, movZ_coche2 = 0.0f, giroCoche2 = 0.0f;
+float giroLlanta2 = 0.0f;
 int edoCoche2 = 0;
 
 //Keyframes (Manipulación y dibujo)
@@ -263,6 +265,7 @@ void animate(void)
 		movX_coche1 = 0.0f;
 		movZ_coche1 += 5.0f;
 		giroCoche1 = 0.0f;
+		giroLlanta1 += 1.0f;
 		if (movZ_coche1 >= 975.0f)
 			edoCoche1 = 2;
 		break;
@@ -270,6 +273,7 @@ void animate(void)
 		movX_coche1 += 5.0f;
 		movZ_coche1 = 975.0f;
 		giroCoche1 = 90.0f;
+		giroLlanta1 += 1.0f;
 		if (movX_coche1 >= 870.0f)
 			edoCoche1 = 3;
 		break;
@@ -277,6 +281,7 @@ void animate(void)
 		movX_coche1 += 5.0f;
 		movZ_coche1 -= 3.63f * 5.0f;
 		giroCoche1 = 164.6f;
+		giroLlanta1 += 1.0f;
 		if (movX_coche1 >= 1100.0f && movZ_coche1 <= 140.0f)
 			edoCoche1 = 4;
 		break;
@@ -284,6 +289,7 @@ void animate(void)
 		movX_coche1 -= 5.0f;
 		movZ_coche1 = 140.0f;
 		giroCoche1 = 270.0f;
+		giroLlanta1 += 1.0f;
 		if (movX_coche1 <= 560.0f)
 			edoCoche1 = 5;
 		break;
@@ -291,6 +297,7 @@ void animate(void)
 		movX_coche1 -= 5.0f;
 		movZ_coche1 -= 2.69f * 5.0f;
 		giroCoche1 = 200.4;
+		giroLlanta1 += 1.0f;
 		if (movX_coche1 <= 415.0f && movZ_coche1 <= -250.0)
 			edoCoche1 = 6;
 		break;
@@ -298,8 +305,68 @@ void animate(void)
 		movX_coche1 -= 5.0f;
 		movZ_coche1 += 0.6f * 5.0f;
 		giroCoche1 = 301.1f;
+		giroLlanta1 += 1.0f;
 		if (movX_coche1 <= 0.0f && movZ_coche1 >= 0.0f)
 			edoCoche1 = 0;
+		break;
+	}
+
+	// Recorrido coche voxel
+	switch (edoCoche2)
+	{
+	case 0:
+		movX_coche2 = 0.0f;
+		movZ_coche2 = 0.0f;
+		giroCoche2 = 0.0f;
+		break;
+	case 1:
+		movX_coche2 = 0.0f;
+		movZ_coche2 += 5.0f;
+		giroCoche2 = 0.0f;
+		if (movZ_coche2 >= 605.0f)
+			edoCoche2 = 2;
+		break;
+	case 2:
+		movX_coche2 += 5.0f;
+		movZ_coche2 += 1.22f * 5.0f;
+		giroCoche2 = 39.3;
+		if (movZ_coche2 >= 1070.0f && movX_coche2 >= 380.0f)
+			edoCoche2 = 3;
+		break;
+	case 3:
+		movX_coche2 += 5.0f;
+		movZ_coche2 -= 1.97f * 5.0f;
+		giroCoche2 = 153.1;
+		if (movZ_coche2 <= 400.0f && movX_coche2 >= 720.0f)
+			edoCoche2 = 4;
+		break;
+	case 4:
+		movX_coche2 = 720.0f;
+		movZ_coche2 -= 5.0f;
+		giroCoche2 = 180.0f;
+		if (movZ_coche2 <= -590.0f)
+			edoCoche2 = 5;
+		break;
+	case 5:
+		movX_coche2 -= 5.0f;
+		movZ_coche2 = -590.0f;
+		giroCoche2 = 270.0f;
+		if (movX_coche2 <= 195.0f)
+			edoCoche2 = 6;
+		break;
+	case 6:
+		movX_coche2 -= 5.0f;
+		movZ_coche2 += 0.64 * 5.0f;
+		giroCoche2 = 302.66;
+		if (movZ_coche2 >= -465.0f && movX_coche2 <= 0.0f)
+			edoCoche2 = 7;
+		break;
+	case 7:
+		movX_coche2 = 0.0f;
+		movZ_coche2 += 5.0f;
+		giroCoche2 = 0.0f;
+		if (movZ_coche2 >= 0.0f)
+			edoCoche2 = 0;
 		break;
 	}
 
@@ -529,7 +596,9 @@ int main()
 	Model cow("resources/objects/cow/cow.obj");
 	// Vehículos
 	Model cocheSteven("resources/objects/cocheSteven/cocheSteven.obj");
+	Model llanta1("resources/objects/cocheSteven/llanta.obj");
 	Model cocheVoxel("resources/objects/cocheVoxel/cocheVoxel.obj");
+	Model llanta2("resources/objects/cocheVoxel/llanta.obj");
 	Model roaming_eye("resources/objects/roaming_eye/roaming_eye.obj");
 	// Ritual Maldito
 	Model ritual("resources/objects/ritual/ritual.obj");
@@ -992,14 +1061,58 @@ int main()
 		tmp = model = glm::scale(model, glm::vec3(20.0f));
 		staticShader.setMat4("model", model);
 		cocheSteven.Draw(staticShader);
+		// Llanta 1
+		model = glm::translate(tmp, glm::vec3(-0.8, 0.35, 1.1));
+		model = glm::rotate(model, glm::radians(giroLlanta1), glm::vec3(1.0f, 0.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		llanta1.Draw(staticShader);
+		// Llanta 2
+		model = glm::translate(tmp, glm::vec3(0.8, 0.35, 1.1));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(giroLlanta1), glm::vec3(1.0f, 0.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		llanta1.Draw(staticShader);
+		// Llanta 3
+		model = glm::translate(tmp, glm::vec3(-0.8, 0.35, -1.2));
+		model = glm::rotate(model, glm::radians(giroLlanta1), glm::vec3(1.0f, 0.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		llanta1.Draw(staticShader);
+		// Llanta 4
+		model = glm::translate(tmp, glm::vec3(0.8, 0.35, -1.2));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(giroLlanta1), glm::vec3(1.0f, 0.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		llanta1.Draw(staticShader);
 
 		// Coche Voxel
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(movX_coche2, 20.0f, movZ_coche2));
+		model = glm::translate(model, glm::vec3(-100.0f + movX_coche2, 15.0f, movZ_coche2));
 		model = glm::rotate(model, glm::radians(giroCoche2), glm::vec3(0.0f, 1.0f, 0.0f));
-		tmp = model = glm::scale(model, glm::vec3(0.5f));
+		tmp = model = glm::scale(model, glm::vec3(0.4f));
 		staticShader.setMat4("model", model);
 		cocheVoxel.Draw(staticShader);
+		// Llanta 1
+		model = glm::translate(tmp, glm::vec3(-40.0f, -15.0f, 90.0f));
+		model = glm::rotate(model, glm::radians(giroLlanta2), glm::vec3(1.0f, 0.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		llanta2.Draw(staticShader);
+		// Llanta 2
+		model = glm::translate(tmp, glm::vec3(40.0f, -15.0f, 90.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(giroLlanta2), glm::vec3(1.0f, 0.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		llanta2.Draw(staticShader);
+		// Llanta 3
+		model = glm::translate(tmp, glm::vec3(-40.0f, -15.0f, -70.0f));
+		model = glm::rotate(model, glm::radians(giroLlanta2), glm::vec3(1.0f, 0.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		llanta2.Draw(staticShader);
+		// Llanta 4
+		model = glm::translate(tmp, glm::vec3(40.0f, -15.0f, -70.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(giroLlanta2), glm::vec3(1.0f, 0.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		llanta2.Draw(staticShader);
 
 		// BMO
 		// Cuerpo
@@ -1078,7 +1191,7 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera.ProcessKeyboard(RIGHT, (float)deltaTime + 50);
 	//To Configure Model
-	if (glfwGetKey(window, GLFW_KEY_KP_0) == GLFW_PRESS)
+	/*if (glfwGetKey(window, GLFW_KEY_KP_0) == GLFW_PRESS)
 		BMOposZ += 5.0f;
 	if (glfwGetKey(window, GLFW_KEY_KP_1) == GLFW_PRESS)
 		BMOposZ -= 5.0f;
@@ -1109,26 +1222,33 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 	if (glfwGetKey(window, GLFW_KEY_PAGE_UP) == GLFW_PRESS)
 		giroBMO--;
 	if (glfwGetKey(window, GLFW_KEY_PAGE_DOWN) == GLFW_PRESS)
-		giroBMO++;
+		giroBMO++;*/
 
 	// Activa recorrido coche Steven
 	if (key == GLFW_KEY_TAB && action == GLFW_PRESS && edoCoche1 == 0)
 		edoCoche1 = 1;
+	// Activa recorrido coche voxel
+	if (key == GLFW_KEY_LEFT_SHIFT && action == GLFW_PRESS && edoCoche1 == 0)
+		edoCoche2 = 1;
 
 	//if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-	//	movX_coche1 += 5.0f;
+	//	movX_coche2 += 5.0f;
 	//if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-	//	movX_coche1 -= 5.0f;
+	//	movX_coche2 -= 5.0f;
 	//if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-	//	movZ_coche1 -= 5.0f;
+	//	movZ_coche2 -= 5.0f;
 	//if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-	//	movZ_coche1 += 5.0f;
+	//	movZ_coche2 += 5.0f;
+	//if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+	//	movY_coche2 += 5.0f;
+	//if (glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS)
+	//	movY_coche2 -= 5.0f;
 	//if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
 	//{
-	//	cout << "X = " << movX_coche1 << endl;
-	//	cout << "Z = " << movZ_coche1 << endl;
+	//	cout << "X = " << movX_coche2 << endl;
+	//	cout << "Y = " << movY_coche2 << endl;
+	//	cout << "Z = " << movZ_coche2 << endl;
 	//}
-
 
 
 	if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
