@@ -122,21 +122,21 @@ float movX = 0.0f, movY = 0.0f, movZ = 0.0f;
 //Keyframes (Manipulación y dibujo)
 // Movimiento BMO
 float	BMOposX = 0.0f,
-BMOposY = 0.0f,
-BMOposZ = 0.0f,
-rotBrazoDer = 0.0f,
-rotBrazoIzq = 0.0f,
-rotPiernaDer = 0.0f,
-rotPiernaIzq = 0.0f,
-giroBMO = 0.0f;
+		BMOposY = 0.0f,
+		BMOposZ = 0.0f,
+		rotBrazoDer = 0.0f,
+		rotBrazoIzq = 0.0f,
+		rotPiernaDer = 0.0f,
+		rotPiernaIzq = 0.0f,
+		giroBMO = 0.0f;
 float	incX = 0.0f,
-incY = 0.0f,
-incZ = 0.0f,
-rotBrazoDerInc = 0.0f,
-rotBrazoIzqInc = 0.0f,
-rotPiernaDerInc = 0.0f,
-rotPiernaIzqInc = 0.0f,
-giroBMOInc = 0.0f;
+		incY = 0.0f,
+		incZ = 0.0f,
+		rotBrazoDerInc = 0.0f,
+		rotBrazoIzqInc = 0.0f,
+		rotPiernaDerInc = 0.0f,
+		rotPiernaIzqInc = 0.0f,
+		giroBMOInc = 0.0f;
 
 #define MAX_FRAMES 9
 int i_max_steps = 25;
@@ -144,13 +144,13 @@ int i_curr_steps = 0;
 typedef struct _frame
 {
 	float	BMOposX,
-		BMOposY,
-		BMOposZ,
-		rotBrazoDer,
-		rotBrazoIzq,
-		rotPiernaDer,
-		rotPiernaIzq,
-		giroBMO;
+			BMOposY,
+			BMOposZ,
+			rotBrazoDer,
+			rotBrazoIzq,
+			rotPiernaDer,
+			rotPiernaIzq,
+			giroBMO;
 
 }FRAME;
 
@@ -326,7 +326,7 @@ void animate(void)
 
 	if (derretir_helado) {
 
-
+		
 		if (pos_gota >= -270.0f && helado_opt == 0) {
 			pos_gota = pos_gota - 0.2;
 			y_gota = y_gota + 0.02;
@@ -639,7 +639,7 @@ int main()
 		// -------------------------------------------------------------------------------------------------------------------------
 		//Remember to activate the shader with the animation
 		animShader.use();
-		animShader.setMat4("projection", projection);
+		animShader.setMat4("projection", projection); 
 		animShader.setMat4("view", view);
 
 		animShader.setVec3("material.specular", glm::vec3(0.5f));
@@ -650,8 +650,8 @@ int main()
 		animShader.setVec3("light.direction", lightDirection);
 		animShader.setVec3("viewPos", camera.Position);
 
-		model = glm::translate(glm::mat4(1.0f), glm::vec3(890.0f, -2.5f, 400.0f));
-		model = glm::scale(model, glm::vec3(1.2f));
+		model = glm::translate(glm::mat4(1.0f), glm::vec3(890.0f, -2.5f, 400.0f)); 
+		model = glm::scale(model, glm::vec3(1.2f));	
 		model = glm::rotate(model, glm::radians(270.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		animShader.setMat4("model", model);
 		maldicion.Draw(animShader);
@@ -875,7 +875,7 @@ int main()
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(3000.0f, relleno_y, -300.0f));
 		model = glm::rotate(model, glm::radians(30.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-		model = glm::scale(model, glm::vec3(0.7f, ancho_galleta, 0.7f));
+		model = glm::scale(model, glm::vec3(0.7f,ancho_galleta,0.7f));
 		staticShader.setMat4("model", model);
 		relleno_cat.Draw(staticShader);
 
@@ -888,7 +888,7 @@ int main()
 
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(2890.0f, pos_gota, -300.0f));
-		model = glm::scale(model, glm::vec3(ancho_gota, y_gota, ancho_gota));
+		model = glm::scale(model, glm::vec3(ancho_gota,y_gota,ancho_gota));
 		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		staticShader.setMat4("model", model);
 		gota_cat.Draw(staticShader);
@@ -1059,7 +1059,7 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 		abducir ^= true;
 	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
 		hacer_ritual ^= true;
-
+	
 	if (key == GLFW_KEY_1 && action == GLFW_PRESS)
 		derretir_helado ^= true;
 
