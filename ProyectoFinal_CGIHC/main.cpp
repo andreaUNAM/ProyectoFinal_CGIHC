@@ -65,9 +65,7 @@ glm::vec3 lightDirection(0.0f, -1.0f, -1.0f);
 // posiciones
 //float x = 0.0f;
 //float y = 0.0f;
-float	movAuto_x = 0.0f,
-movAuto_z = 0.0f,
-orienta = 0.0f,
+float	orienta = 0.0f,
 joseX = 1500,
 joseZ = -800.0,
 joseY = 0.0,
@@ -114,9 +112,9 @@ float relleno_y = -200.0f;
 float ancho_charco = 2.0f;
 float y_tapa = -200.0f;
 
-
-
-float movX = 0.0f, movY = 0.0f, movZ = 0.0f;
+// Movimiento del coche de Steven
+float movX_coche1 = 0.0f, movZ_coche1 = 0.0f, giroCoche1 = 0.0f;
+int edoCoche1 = 0;
 
 
 //Keyframes (Manipulación y dibujo)
@@ -251,10 +249,56 @@ void animate(void)
 		}
 	}
 
-	//Vehículo
-	if (animacion)
+	// Recorrido coche Steven
+	switch (edoCoche1)
 	{
-		movAuto_z += 3.0f;
+	case 0:
+		movX_coche1 = 0.0f;
+		movZ_coche1 = 0.0f;
+		giroCoche1 = 0.0f;
+		break;
+	case 1:
+		movX_coche1 = 0.0f;
+		movZ_coche1 += 5.0f;
+		giroCoche1 = 0.0f;
+		if (movZ_coche1 >= 975.0f)
+			edoCoche1 = 2;
+		break;
+	case 2:
+		movX_coche1 += 5.0f;
+		movZ_coche1 = 975.0f;
+		giroCoche1 = 90.0f;
+		if (movX_coche1 >= 870.0f)
+			edoCoche1 = 3;
+		break;
+	case 3:
+		movX_coche1 += 5.0f;
+		movZ_coche1 -= 3.63f * 5.0f;
+		giroCoche1 = 164.6f;
+		if (movX_coche1 >= 1100.0f && movZ_coche1 <= 140.0f)
+			edoCoche1 = 4;
+		break;
+	case 4:
+		movX_coche1 -= 5.0f;
+		movZ_coche1 = 140.0f;
+		giroCoche1 = 270.0f;
+		if (movX_coche1 <= 560.0f)
+			edoCoche1 = 5;
+		break;
+	case 5:
+		movX_coche1 -= 5.0f;
+		movZ_coche1 -= 2.69f * 5.0f;
+		giroCoche1 = 200.4;
+		if (movX_coche1 <= 415.0f && movZ_coche1 <= -250.0)
+			edoCoche1 = 6;
+		break;
+	case 6:
+		movX_coche1 -= 5.0f;
+		movZ_coche1 += 0.6f * 5.0f;
+		giroCoche1 = 301.1f;
+		if (movX_coche1 <= 0.0f && movZ_coche1 >= 0.0f)
+			edoCoche1 = 0;
+		break;
 	}
 
 	if (abducir) {
@@ -495,7 +539,7 @@ int main()
 	Model gota_cat("resources/objects/gato_galleta/gota/gota.obj");
 	Model charco_cat("resources/objects/gato_galleta/charco/charco.obj");
 
-	ModelAnim maldicion("resources/objects_tmp/maldicion1/maldicion1.dae");
+	ModelAnim maldicion("resources/objects/maldicion1/maldicion1.dae");
 	maldicion.initShaders(animShader.ID);
 
 	//Model botaDer("resources/objects/Personaje/bota.obj");
@@ -938,7 +982,13 @@ int main()
 		staticShader.setMat4("model", model);
 		faro.Draw(staticShader);
 
-		// Coche
+		// Coche Steven
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-1585.0f + movX_coche1, 0.0f, -1665.0f + movZ_coche1));
+		model = glm::rotate(model, glm::radians(giroCoche1), glm::vec3(0.0f, 1.0f, 0.0f));
+		tmp = model = glm::scale(model, glm::vec3(20.0f));
+		staticShader.setMat4("model", model);
+		cocheSteven.Draw(staticShader);
 
 		// BMO
 		// Cuerpo
@@ -1050,14 +1100,34 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 	if (glfwGetKey(window, GLFW_KEY_PAGE_DOWN) == GLFW_PRESS)
 		giroBMO++;
 
+	// Activa recorrido coche Steven
+	if (key == GLFW_KEY_TAB && action == GLFW_PRESS && edoCoche1 == 0)
+		edoCoche1 = 1;
+
+	//if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	//	movX_coche1 += 5.0f;
+	//if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	//	movX_coche1 -= 5.0f;
+	//if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+	//	movZ_coche1 -= 5.0f;
+	//if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+	//	movZ_coche1 += 5.0f;
+	//if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
+	//{
+	//	cout << "X = " << movX_coche1 << endl;
+	//	cout << "Z = " << movZ_coche1 << endl;
+	//}
+
+
 
 	if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
 		lightPosition.x++;
 	if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS)
 		lightPosition.x--;
-	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
+
+	if (key == GLFW_KEY_X && action == GLFW_PRESS)
 		abducir ^= true;
-	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
+	if (key == GLFW_KEY_R && action == GLFW_PRESS)
 		hacer_ritual ^= true;
 
 	if (key == GLFW_KEY_1 && action == GLFW_PRESS)
