@@ -115,7 +115,9 @@ float y_tapa = -200.0f;
 // Movimiento del coche de Steven
 float movX_coche1 = 0.0f, movZ_coche1 = 0.0f, giroCoche1 = 0.0f;
 int edoCoche1 = 0;
-
+// Movimiento del coche voxel
+float movX_coche2 = 0.0f, movZ_coche2 = 0.0f, giroCoche2 = 0.0f;
+int edoCoche2 = 0;
 
 //Keyframes (Manipulación y dibujo)
 // Movimiento BMO
@@ -527,6 +529,7 @@ int main()
 	Model cow("resources/objects/cow/cow.obj");
 	// Vehículos
 	Model cocheSteven("resources/objects/cocheSteven/cocheSteven.obj");
+	Model cocheVoxel("resources/objects/cocheVoxel/cocheVoxel.obj");
 	Model roaming_eye("resources/objects/roaming_eye/roaming_eye.obj");
 	// Ritual Maldito
 	Model ritual("resources/objects/ritual/ritual.obj");
@@ -989,6 +992,14 @@ int main()
 		tmp = model = glm::scale(model, glm::vec3(20.0f));
 		staticShader.setMat4("model", model);
 		cocheSteven.Draw(staticShader);
+
+		// Coche Voxel
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(movX_coche2, 20.0f, movZ_coche2));
+		model = glm::rotate(model, glm::radians(giroCoche2), glm::vec3(0.0f, 1.0f, 0.0f));
+		//tmp = model = glm::scale(model, glm::vec3(20.0f));
+		staticShader.setMat4("model", model);
+		cocheVoxel.Draw(staticShader);
 
 		// BMO
 		// Cuerpo

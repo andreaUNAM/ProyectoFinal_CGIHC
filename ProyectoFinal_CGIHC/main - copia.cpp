@@ -115,26 +115,28 @@ float y_tapa = -200.0f;
 // Movimiento del coche de Steven
 float movX_coche1 = 0.0f, movZ_coche1 = 0.0f, giroCoche1 = 0.0f;
 int edoCoche1 = 0;
-
+// Movimiento del coche voxel
+float movX_coche2 = 0.0f, movZ_coche2 = 0.0f, giroCoche2 = 0.0f;
+int edoCoche2 = 0;
 
 //Keyframes (Manipulación y dibujo)
 // Movimiento BMO
 float	BMOposX = 0.0f,
-		BMOposY = 0.0f,
-		BMOposZ = 0.0f,
-		rotBrazoDer = 0.0f,
-		rotBrazoIzq = 0.0f,
-		rotPiernaDer = 0.0f,
-		rotPiernaIzq = 0.0f,
-		giroBMO = 0.0f;
+BMOposY = 0.0f,
+BMOposZ = 0.0f,
+rotBrazoDer = 0.0f,
+rotBrazoIzq = 0.0f,
+rotPiernaDer = 0.0f,
+rotPiernaIzq = 0.0f,
+giroBMO = 0.0f;
 float	incX = 0.0f,
-		incY = 0.0f,
-		incZ = 0.0f,
-		rotBrazoDerInc = 0.0f,
-		rotBrazoIzqInc = 0.0f,
-		rotPiernaDerInc = 0.0f,
-		rotPiernaIzqInc = 0.0f,
-		giroBMOInc = 0.0f;
+incY = 0.0f,
+incZ = 0.0f,
+rotBrazoDerInc = 0.0f,
+rotBrazoIzqInc = 0.0f,
+rotPiernaDerInc = 0.0f,
+rotPiernaIzqInc = 0.0f,
+giroBMOInc = 0.0f;
 
 #define MAX_FRAMES 9
 int i_max_steps = 25;
@@ -142,13 +144,13 @@ int i_curr_steps = 0;
 typedef struct _frame
 {
 	float	BMOposX,
-			BMOposY,
-			BMOposZ,
-			rotBrazoDer,
-			rotBrazoIzq,
-			rotPiernaDer,
-			rotPiernaIzq,
-			giroBMO;
+		BMOposY,
+		BMOposZ,
+		rotBrazoDer,
+		rotBrazoIzq,
+		rotPiernaDer,
+		rotPiernaIzq,
+		giroBMO;
 
 }FRAME;
 
@@ -273,7 +275,7 @@ void animate(void)
 		break;
 	case 3:
 		movX_coche1 += 5.0f;
-		movZ_coche1 -= 3.63f*5.0f;
+		movZ_coche1 -= 3.63f * 5.0f;
 		giroCoche1 = 164.6f;
 		if (movX_coche1 >= 1100.0f && movZ_coche1 <= 140.0f)
 			edoCoche1 = 4;
@@ -370,7 +372,7 @@ void animate(void)
 
 	if (derretir_helado) {
 
-		
+
 		if (pos_gota >= -270.0f && helado_opt == 0) {
 			pos_gota = pos_gota - 0.2;
 			y_gota = y_gota + 0.02;
@@ -527,6 +529,7 @@ int main()
 	Model cow("resources/objects/cow/cow.obj");
 	// Vehículos
 	Model cocheSteven("resources/objects/cocheSteven/cocheSteven.obj");
+	Model cocheVoxel("resources/objects/cocheVoxel/cocheVoxel.obj");
 	Model roaming_eye("resources/objects/roaming_eye/roaming_eye.obj");
 	// Ritual Maldito
 	Model ritual("resources/objects/ritual/ritual.obj");
@@ -637,7 +640,7 @@ int main()
 		staticShader.setVec3("viewPos", camera.Position);
 		staticShader.setVec3("dirLight.direction", lightDirection);
 		staticShader.setVec3("dirLight.ambient", glm::vec3(1.0f, 1.0f, 1.0f));
-		staticShader.setVec3("dirLight.diffuse", glm::vec3(0.0f, 0.0f, 0.0f));
+		staticShader.setVec3("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
 		staticShader.setVec3("dirLight.specular", glm::vec3(0.0f, 0.0f, 0.0f));
 
 		staticShader.setVec3("pointLight[0].position", lightPosition);
@@ -683,7 +686,7 @@ int main()
 		// -------------------------------------------------------------------------------------------------------------------------
 		//Remember to activate the shader with the animation
 		animShader.use();
-		animShader.setMat4("projection", projection); 
+		animShader.setMat4("projection", projection);
 		animShader.setMat4("view", view);
 
 		animShader.setVec3("material.specular", glm::vec3(0.5f));
@@ -694,8 +697,8 @@ int main()
 		animShader.setVec3("light.direction", lightDirection);
 		animShader.setVec3("viewPos", camera.Position);
 
-		model = glm::translate(glm::mat4(1.0f), glm::vec3(890.0f, -2.5f, 400.0f)); 
-		model = glm::scale(model, glm::vec3(1.2f));	
+		model = glm::translate(glm::mat4(1.0f), glm::vec3(890.0f, -2.5f, 400.0f));
+		model = glm::scale(model, glm::vec3(1.2f));
 		model = glm::rotate(model, glm::radians(270.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		animShader.setMat4("model", model);
 		maldicion.Draw(animShader);
@@ -919,7 +922,7 @@ int main()
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(3000.0f, relleno_y, -300.0f));
 		model = glm::rotate(model, glm::radians(30.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-		model = glm::scale(model, glm::vec3(0.7f,ancho_galleta,0.7f));
+		model = glm::scale(model, glm::vec3(0.7f, ancho_galleta, 0.7f));
 		staticShader.setMat4("model", model);
 		relleno_cat.Draw(staticShader);
 
@@ -932,7 +935,7 @@ int main()
 
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(2890.0f, pos_gota, -300.0f));
-		model = glm::scale(model, glm::vec3(ancho_gota,y_gota,ancho_gota));
+		model = glm::scale(model, glm::vec3(ancho_gota, y_gota, ancho_gota));
 		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		staticShader.setMat4("model", model);
 		gota_cat.Draw(staticShader);
@@ -989,6 +992,14 @@ int main()
 		tmp = model = glm::scale(model, glm::vec3(20.0f));
 		staticShader.setMat4("model", model);
 		cocheSteven.Draw(staticShader);
+
+		// Coche Voxel
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(movX_coche2, 20.0f, movZ_coche2));
+		model = glm::rotate(model, glm::radians(giroCoche2), glm::vec3(0.0f, 1.0f, 0.0f));
+		tmp = model = glm::scale(model, glm::vec3(0.5f));
+		staticShader.setMat4("model", model);
+		cocheVoxel.Draw(staticShader);
 
 		// BMO
 		// Cuerpo
@@ -1129,7 +1140,7 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 		abducir ^= true;
 	if (key == GLFW_KEY_R && action == GLFW_PRESS)
 		hacer_ritual ^= true;
-	
+
 	if (key == GLFW_KEY_1 && action == GLFW_PRESS)
 		derretir_helado ^= true;
 
