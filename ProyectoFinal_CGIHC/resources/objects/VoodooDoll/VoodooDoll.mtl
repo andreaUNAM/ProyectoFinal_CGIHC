@@ -12,8 +12,8 @@ newmtl 01___Default
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka black-fabric-seamless-texture-texture-map-d-d-texture-map-d-programms-black-white-seamless-texture-can-be-used-as-110044312.png
-	map_Kd black-fabric-seamless-texture-texture-map-d-d-texture-map-d-programms-black-white-seamless-texture-can-be-used-as-110044312.png
+	map_Ka black-fabric.png
+	map_Kd black-fabric.png
 
 newmtl Material_002
 	Kd 0.0010 0.0010 0.0010
@@ -40,5 +40,5 @@ newmtl 02___Default
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka 96151392-camouflage-texture-of-military-cap-victory-day-.png
-	map_Kd 96151392-camouflage-texture-of-military-cap-victory-day-.png
+	map_Ka brown-clothe.png
+	map_Kd brown-clothe.png
