@@ -265,7 +265,7 @@ void animate(void)
 		movX_coche1 = 0.0f;
 		movZ_coche1 += 5.0f;
 		giroCoche1 = 0.0f;
-		giroLlanta1 += 1.0f;
+		giroLlanta1 += 5.0f;
 		if (movZ_coche1 >= 975.0f)
 			edoCoche1 = 2;
 		break;
@@ -273,7 +273,7 @@ void animate(void)
 		movX_coche1 += 5.0f;
 		movZ_coche1 = 975.0f;
 		giroCoche1 = 90.0f;
-		giroLlanta1 += 1.0f;
+		giroLlanta1 += 5.0f;
 		if (movX_coche1 >= 870.0f)
 			edoCoche1 = 3;
 		break;
@@ -281,7 +281,7 @@ void animate(void)
 		movX_coche1 += 5.0f;
 		movZ_coche1 -= 3.63f * 5.0f;
 		giroCoche1 = 164.6f;
-		giroLlanta1 += 1.0f;
+		giroLlanta1 += 5.0f;
 		if (movX_coche1 >= 1100.0f && movZ_coche1 <= 140.0f)
 			edoCoche1 = 4;
 		break;
@@ -289,7 +289,7 @@ void animate(void)
 		movX_coche1 -= 5.0f;
 		movZ_coche1 = 140.0f;
 		giroCoche1 = 270.0f;
-		giroLlanta1 += 1.0f;
+		giroLlanta1 += 5.0f;
 		if (movX_coche1 <= 560.0f)
 			edoCoche1 = 5;
 		break;
@@ -297,7 +297,7 @@ void animate(void)
 		movX_coche1 -= 5.0f;
 		movZ_coche1 -= 2.69f * 5.0f;
 		giroCoche1 = 200.4;
-		giroLlanta1 += 1.0f;
+		giroLlanta1 += 5.0f;
 		if (movX_coche1 <= 415.0f && movZ_coche1 <= -250.0)
 			edoCoche1 = 6;
 		break;
@@ -305,7 +305,7 @@ void animate(void)
 		movX_coche1 -= 5.0f;
 		movZ_coche1 += 0.6f * 5.0f;
 		giroCoche1 = 301.1f;
-		giroLlanta1 += 1.0f;
+		giroLlanta1 += 5.0f;
 		if (movX_coche1 <= 0.0f && movZ_coche1 >= 0.0f)
 			edoCoche1 = 0;
 		break;
@@ -323,6 +323,7 @@ void animate(void)
 		movX_coche2 = 0.0f;
 		movZ_coche2 += 5.0f;
 		giroCoche2 = 0.0f;
+		giroLlanta2 += 5.0f;
 		if (movZ_coche2 >= 605.0f)
 			edoCoche2 = 2;
 		break;
@@ -330,6 +331,7 @@ void animate(void)
 		movX_coche2 += 5.0f;
 		movZ_coche2 += 1.22f * 5.0f;
 		giroCoche2 = 39.3;
+		giroLlanta2 += 5.0f;
 		if (movZ_coche2 >= 1070.0f && movX_coche2 >= 380.0f)
 			edoCoche2 = 3;
 		break;
@@ -337,6 +339,7 @@ void animate(void)
 		movX_coche2 += 5.0f;
 		movZ_coche2 -= 1.97f * 5.0f;
 		giroCoche2 = 153.1;
+		giroLlanta2 += 5.0f;
 		if (movZ_coche2 <= 400.0f && movX_coche2 >= 720.0f)
 			edoCoche2 = 4;
 		break;
@@ -344,6 +347,7 @@ void animate(void)
 		movX_coche2 = 720.0f;
 		movZ_coche2 -= 5.0f;
 		giroCoche2 = 180.0f;
+		giroLlanta2 += 5.0f;
 		if (movZ_coche2 <= -590.0f)
 			edoCoche2 = 5;
 		break;
@@ -351,6 +355,7 @@ void animate(void)
 		movX_coche2 -= 5.0f;
 		movZ_coche2 = -590.0f;
 		giroCoche2 = 270.0f;
+		giroLlanta2 += 5.0f;
 		if (movX_coche2 <= 195.0f)
 			edoCoche2 = 6;
 		break;
@@ -358,6 +363,7 @@ void animate(void)
 		movX_coche2 -= 5.0f;
 		movZ_coche2 += 0.64 * 5.0f;
 		giroCoche2 = 302.66;
+		giroLlanta2 += 5.0f;
 		if (movZ_coche2 >= -465.0f && movX_coche2 <= 0.0f)
 			edoCoche2 = 7;
 		break;
@@ -365,6 +371,7 @@ void animate(void)
 		movX_coche2 = 0.0f;
 		movZ_coche2 += 5.0f;
 		giroCoche2 = 0.0f;
+		giroLlanta2 += 5.0f;
 		if (movZ_coche2 >= 0.0f)
 			edoCoche2 = 0;
 		break;
@@ -518,7 +525,7 @@ int main()
 	monitors = glfwGetPrimaryMonitor();
 	getResolution();
 
-	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "CGeIHC", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Proyecto Final", NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -613,25 +620,6 @@ int main()
 
 	ModelAnim maldicion("resources/objects/maldicion1/maldicion1.dae");
 	maldicion.initShaders(animShader.ID);
-
-	//Model botaDer("resources/objects/Personaje/bota.obj");
-	//Model piernaDer("resources/objects/Personaje/piernader.obj");
-	//Model piernaIzq("resources/objects/Personaje/piernader.obj");
-	//Model torso("resources/objects/Personaje/torso.obj");
-	//Model brazoDer("resources/objects/Personaje/brazoder.obj");
-	//Model brazoIzq("resources/objects/Personaje/brazoizq.obj");
-	//Model cabeza("resources/objects/Personaje/cabeza.obj");
-	//Model carro("resources/objects/lambo/carroceria.obj");
-	//Model llanta("resources/objects/lambo/Wheel.obj");
-	//Model casaVieja("resources/objects/casa/OldHouse.obj");
-	////Model cubo("resources/objects/cubo/cube02.obj");
-	//Model casaDoll("resources/objects/casa/DollHouse.obj");
-
-	//ModelAnim animacionPersonaje("resources/objects/Personaje1/PersonajeBrazo.dae");
-	//animacionPersonaje.initShaders(animShader.ID);
-
-	//ModelAnim ninja("resources/objects/ZombieWalk/ZombieWalk.dae");
-	//ninja.initShaders(animShader.ID);
 
 	//Inicialización de KeyFrames
 	for (int i = 0; i < MAX_FRAMES; i++)
@@ -778,12 +766,6 @@ int main()
 		staticShader.use();
 		staticShader.setMat4("projection", projection);
 		staticShader.setMat4("view", view);
-
-		/*model = glm::translate(glm::mat4(1.0f), glm::vec3(250.0f, 0.0f, -10.0f));
-		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		staticShader.setMat4("model", model);
-		casaDoll.Draw(staticShader);*/
-
 
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(-2500.0f, -1550.0f, 2500.0f));
@@ -1017,36 +999,6 @@ int main()
 			charco_cat.Draw(staticShader);
 		}
 
-		/*
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-1800.0f, 0.5f, 1550.0f));
-		model = glm::scale(model, glm::vec3(35.0f));
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		staticShader.setMat4("model", model);
-		house2.Draw(staticShader);
-
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-1900.0f, 0.0f, 1250.0f));
-		model = glm::scale(model, glm::vec3(15.0f));
-		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		staticShader.setMat4("model", model);
-		house4.Draw(staticShader);
-
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-1850.0f, 0.0f, 1050.0f));
-		model = glm::scale(model, glm::vec3(1.5f));
-		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		staticShader.setMat4("model", model);
-		house3.Draw(staticShader);
-
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-1850.0f, 1.5f, 750.0f));
-		model = glm::scale(model, glm::vec3(0.015f));
-		//model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		staticShader.setMat4("model", model);
-		house5.Draw(staticShader);*/
-
-
 		// Faro
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(-1600.0f, 100.0f, -2200.0f));
@@ -1191,7 +1143,7 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera.ProcessKeyboard(RIGHT, (float)deltaTime + 50);
 	//To Configure Model
-	/*if (glfwGetKey(window, GLFW_KEY_KP_0) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_KP_0) == GLFW_PRESS)
 		BMOposZ += 5.0f;
 	if (glfwGetKey(window, GLFW_KEY_KP_1) == GLFW_PRESS)
 		BMOposZ -= 5.0f;
@@ -1222,7 +1174,7 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 	if (glfwGetKey(window, GLFW_KEY_PAGE_UP) == GLFW_PRESS)
 		giroBMO--;
 	if (glfwGetKey(window, GLFW_KEY_PAGE_DOWN) == GLFW_PRESS)
-		giroBMO++;*/
+		giroBMO++;
 
 	// Activa recorrido coche Steven
 	if (key == GLFW_KEY_TAB && action == GLFW_PRESS && edoCoche1 == 0)
@@ -1231,24 +1183,6 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 	if (key == GLFW_KEY_LEFT_SHIFT && action == GLFW_PRESS && edoCoche1 == 0)
 		edoCoche2 = 1;
 
-	//if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-	//	movX_coche2 += 5.0f;
-	//if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-	//	movX_coche2 -= 5.0f;
-	//if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-	//	movZ_coche2 -= 5.0f;
-	//if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-	//	movZ_coche2 += 5.0f;
-	//if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-	//	movY_coche2 += 5.0f;
-	//if (glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS)
-	//	movY_coche2 -= 5.0f;
-	//if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
-	//{
-	//	cout << "X = " << movX_coche2 << endl;
-	//	cout << "Y = " << movY_coche2 << endl;
-	//	cout << "Z = " << movZ_coche2 << endl;
-	//}
 
 
 	if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
@@ -1263,10 +1197,6 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 
 	if (key == GLFW_KEY_1 && action == GLFW_PRESS)
 		derretir_helado ^= true;
-
-	//Car animation
-	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
-		animacion ^= true;
 
 	//To play KeyFrame animation 
 	if (key == GLFW_KEY_P && action == GLFW_PRESS)
