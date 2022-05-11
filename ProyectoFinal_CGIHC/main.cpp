@@ -955,51 +955,56 @@ int main()
 	maldicion.initShaders(animShader.ID);
 
 	//Inicialización de KeyFrames
-	for (int i = 0; i < MAX_FRAMES; i++)
-	{
-		// Baile pregrabado
-		KeyFrame[0].BMOposX = 65;
-		KeyFrame[0].BMOposY = 45;
-		KeyFrame[0].BMOposZ = -10;
-		KeyFrame[0].rotBrazoIzq = 40;
-		KeyFrame[0].rotBrazoDer = -47;
-		KeyFrame[0].rotPiernaDer = -91;
-		KeyFrame[0].rotPiernaIzq = -91;
-		KeyFrame[0].giroBMO = 0;
-		KeyFrame[1].BMOposX = 0;
-		KeyFrame[1].BMOposY = 45;
-		KeyFrame[1].BMOposZ = -35;
-		KeyFrame[1].rotBrazoIzq = -35;
-		KeyFrame[1].rotBrazoDer = -105;
-		KeyFrame[1].rotPiernaDer = -44;
-		KeyFrame[1].rotPiernaIzq = -91;
-		KeyFrame[1].giroBMO = 58;
-		KeyFrame[2].BMOposX = 0;
-		KeyFrame[2].BMOposY = 45;
-		KeyFrame[2].BMOposZ = -35;
-		KeyFrame[2].rotBrazoIzq = -105;
-		KeyFrame[2].rotBrazoDer = -105;
-		KeyFrame[2].rotPiernaDer = -89;
-		KeyFrame[2].rotPiernaIzq = -37;
-		KeyFrame[2].giroBMO = 90;
-		KeyFrame[3].BMOposX = -70;
-		KeyFrame[3].BMOposY = 45;
-		KeyFrame[3].BMOposZ = -25;
-		KeyFrame[3].rotBrazoIzq = 87;
-		KeyFrame[3].rotBrazoDer = 85;
-		KeyFrame[3].rotPiernaDer = -89;
-		KeyFrame[3].rotPiernaIzq = -91;
-		KeyFrame[3].giroBMO = 13;
-		KeyFrame[4].BMOposX = -70;
-		KeyFrame[4].BMOposY = 0;
-		KeyFrame[4].BMOposZ = -25;
-		KeyFrame[4].rotBrazoIzq = 87;
-		KeyFrame[4].rotBrazoDer = 84.9999;
-		KeyFrame[4].rotPiernaDer = 0.999969;
-		KeyFrame[4].rotPiernaIzq = 1;
-		KeyFrame[4].giroBMO = 13;
-		FrameIndex = 5;
-	}
+	// Baile pregrabado
+	KeyFrame[0].BMOposX = 0;
+	KeyFrame[0].BMOposY = 25;
+	KeyFrame[0].BMOposZ = 0;
+	KeyFrame[0].rotBrazoIzq = 13;
+	KeyFrame[0].rotBrazoDer = 15;
+	KeyFrame[0].rotPiernaDer = -91;
+	KeyFrame[0].rotPiernaIzq = -91;
+	KeyFrame[0].giroBMO = 0;
+	KeyFrame[1].BMOposX = 0;
+	KeyFrame[1].BMOposY = 25;
+	KeyFrame[1].BMOposZ = 0;
+	KeyFrame[1].rotBrazoIzq = 35;
+	KeyFrame[1].rotBrazoDer = -15;
+	KeyFrame[1].rotPiernaDer = -91;
+	KeyFrame[1].rotPiernaIzq = -91;
+	KeyFrame[1].giroBMO = -35;
+	KeyFrame[2].BMOposX = 0;
+	KeyFrame[2].BMOposY = 25;
+	KeyFrame[2].BMOposZ = 0;
+	KeyFrame[2].rotBrazoIzq = -11;
+	KeyFrame[2].rotBrazoDer = 35;
+	KeyFrame[2].rotPiernaDer = -91;
+	KeyFrame[2].rotPiernaIzq = -91;
+	KeyFrame[2].giroBMO = 31;
+	KeyFrame[3].BMOposX = 0;
+	KeyFrame[3].BMOposY = 50;
+	KeyFrame[3].BMOposZ = 0;
+	KeyFrame[3].rotBrazoIzq = 61;
+	KeyFrame[3].rotBrazoDer = 54;
+	KeyFrame[3].rotPiernaDer = -39;
+	KeyFrame[3].rotPiernaIzq = -91;
+	KeyFrame[3].giroBMO = -10;
+	KeyFrame[4].BMOposX = 0;
+	KeyFrame[4].BMOposY = 25;
+	KeyFrame[4].BMOposZ = 0;
+	KeyFrame[4].rotBrazoIzq = -1;
+	KeyFrame[4].rotBrazoDer = -2;
+	KeyFrame[4].rotPiernaDer = -91;
+	KeyFrame[4].rotPiernaIzq = -91;
+	KeyFrame[4].giroBMO = -10;
+	KeyFrame[5].BMOposX = 0;
+	KeyFrame[5].BMOposY = 0;
+	KeyFrame[5].BMOposZ = 0;
+	KeyFrame[5].rotBrazoIzq = -1;
+	KeyFrame[5].rotBrazoDer = -2;
+	KeyFrame[5].rotPiernaDer = 1;
+	KeyFrame[5].rotPiernaIzq = 1;
+	KeyFrame[5].giroBMO = -10;
+	FrameIndex = 6;
 
 	KeyFrame2[0].voodooX = 2200;
 	KeyFrame2[0].voodooY = -350;
@@ -1325,9 +1330,9 @@ int main()
 			staticShader.setVec3("dirLight.ambient", glm::vec3(.2f, 0.2f, 0.2f));
 		}
 		else {
-			staticShader.setVec3("dirLight.ambient", glm::vec3(1.0f, 1.0f, 1.0f));
+			staticShader.setVec3("dirLight.ambient", glm::vec3(1.0f - at, 1.0f - at, 1.0f - at));
 		}
-		staticShader.setVec3("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+		staticShader.setVec3("dirLight.diffuse", glm::vec3(0.5f - at, 0.5f - at, 0.5f - at));
 		staticShader.setVec3("dirLight.specular", glm::vec3(0.0f, 0.0f, 0.0f));
 
 		staticShader.setVec3("pointLight[0].position", lightPosition);
@@ -1851,7 +1856,7 @@ int main()
 
 		//CUERPO
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 500.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 500.0f, 200.0f));
 		tmp = model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		staticShader.setMat4("model", model);
 		eda_cuerpo.Draw(staticShader);
@@ -1882,7 +1887,7 @@ int main()
 
 		if (esfera) {
 			model = glm::mat4(1.0f);
-			model = glm::translate(model, glm::vec3(100.0f, 520.0f + esfera_Y, esfera_Z));
+			model = glm::translate(model, glm::vec3(100.0f, 520.0f + esfera_Y, 200.0f +esfera_Z));
 			model = glm::scale(model, glm::vec3(50.0f));
 			staticShader.setMat4("model", model);
 			eda_esfera.Draw(staticShader);
