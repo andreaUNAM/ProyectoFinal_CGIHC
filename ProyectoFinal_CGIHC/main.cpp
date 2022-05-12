@@ -875,25 +875,25 @@ int main()
 	// build and compile shaders
 	// -------------------------
 	Shader staticShader("Shaders/shader_Lights.vs", "Shaders/shader_Lights.fs");
-	Shader skyboxShader("Shaders/skybox.vs", "Shaders/skybox.fs");
+	//Shader skyboxShader("Shaders/skybox.vs", "Shaders/skybox.fs");
 	Shader animShader("Shaders/anim.vs", "Shaders/anim.fs");
 
-	vector<std::string> faces
-	{
-		"resources/skybox/right.jpg",
-		"resources/skybox/left.jpg",
-		"resources/skybox/top.jpg",
-		"resources/skybox/bottom.jpg",
-		"resources/skybox/front.jpg",
-		"resources/skybox/back.jpg"
-	};
+	//vector<std::string> faces
+	//{
+	//	"resources/skybox/ro/left.png",
+	//	"resources/skybox/ro/right.png",
+	//	"resources/skybox/ro/bottom.png",
+	//	"resources/skybox/ro/top.png",
+	//	"resources/skybox/ro/back.png",
+	//	"resources/skybox/ro/front.png"
+	//};
 
-	Skybox skybox = Skybox(faces);
+	//Skybox skybox = Skybox(faces);
 
 	// Shader configuration
 	// --------------------
-	skyboxShader.use();
-	skyboxShader.setInt("skybox", 0);
+	//skyboxShader.use();
+	//skyboxShader.setInt("skybox", 0);
 
 	// load models
 	// -----------
@@ -950,6 +950,9 @@ int main()
 	Model nail2("resources/objects/nail/nail.obj");
 	Model nail3("resources/objects/nail/nail.obj");
 	Model voodoDoll("resources/objects/VoodooDoll/VoodooDoll.obj");
+
+	// Skybox
+	//Model skybox2("resources/skybox/skybox.obj");
 
 	ModelAnim maldicion("resources/objects/maldicion1/maldicion1.dae");
 	maldicion.initShaders(animShader.ID);
@@ -1305,7 +1308,7 @@ int main()
 	// -----------
 	while (!glfwWindowShouldClose(window))
 	{
-		skyboxShader.setInt("skybox", 0);
+		//skyboxShader.setInt("skybox", 0);
 
 		// per-frame time logic
 		// --------------------
@@ -1900,8 +1903,11 @@ int main()
 		//-------------------------------------------------------------------------------------
 		// draw skybox as last
 		// -------------------
-		skyboxShader.use();
-		skybox.Draw(skyboxShader, view, projection, camera);
+		/*skyboxShader.use();
+		skybox.Draw(skyboxShader, view, projection, camera);*/
+		//model = glm::mat4(1.0f);
+		//staticShader.setMat4("model", model);
+		//skybox2.Draw(staticShader);
 
 		// Limitar el framerate a 60
 		deltaTime = SDL_GetTicks() - lastFrame; // time for full 1 loop
@@ -1917,7 +1923,7 @@ int main()
 		glfwPollEvents();
 	}
 
-	skybox.Terminate();
+	//skybox.Terminate();
 
 	glfwTerminate();
 	return 0;
