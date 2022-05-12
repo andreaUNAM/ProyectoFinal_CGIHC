@@ -62,11 +62,8 @@ lastFrame = 0.0f;
 glm::vec3 lightPosition(0.0f, 4.0f, -10.0f);
 glm::vec3 lightDirection(0.0f, -1.0f, -1.0f);
 
-// posiciones
-//float x = 0.0f;
-//float y = 0.0f;
-float	orienta = 0.0f,
-joseX = 1500,
+// posicioness
+float	joseX = 1500,
 joseZ = -800.0,
 joseY = 0.0,
 deltaJose = 0.0,
@@ -950,9 +947,6 @@ int main()
 	Model nail2("resources/objects/nail/nail.obj");
 	Model nail3("resources/objects/nail/nail.obj");
 	Model voodoDoll("resources/objects/VoodooDoll/VoodooDoll.obj");
-
-	// Skybox
-	//Model skybox2("resources/skybox/ro/skybox.obj");
 
 	ModelAnim maldicion("resources/objects/maldicion1/maldicion1.dae");
 	maldicion.initShaders(animShader.ID);
@@ -1905,12 +1899,6 @@ int main()
 		// -------------------
 		skyboxShader.use();
 		skybox.Draw(skyboxShader, view, projection, camera);
-
-		/*model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, -500.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(10.0f));
-		staticShader.setMat4("model", model);
-		skybox2.Draw(staticShader);*/
 
 		// Limitar el framerate a 60
 		deltaTime = SDL_GetTicks() - lastFrame; // time for full 1 loop
