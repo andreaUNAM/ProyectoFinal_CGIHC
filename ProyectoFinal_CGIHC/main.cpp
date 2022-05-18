@@ -81,12 +81,7 @@ anti_ritualZ = 200.0,
 union_ritualX = 2000.0,
 rituales_escala = 2.0,
 ritual_rot = 0.0;
-bool	animacion = false,
-recorrido1 = true,
-recorrido2 = false,
-recorrido3 = false,
-recorrido4 = false,
-dibujaJose = true,
+bool dibujaJose = true,
 abducir = false,
 cambiaTrayectoriaNave = false,
 hacer_ritual = false,
@@ -202,6 +197,11 @@ rotBrazoIzqInc = 0.0f,
 rotPiernaDerInc = 0.0f,
 rotPiernaIzqInc = 0.0f,
 giroBMOInc = 0.0f;
+// Luz BMO
+bool prendeCarita = false;
+float posLuzX = 0.0f,
+posLuzY = 0.0f,
+posLuzZ = 0.0f;
 
 #define MAX_FRAMES 9
 int i_max_steps = 25;
@@ -508,42 +508,50 @@ void animate(void)
 		movZ_coche1 += 5.0f;
 		giroCoche1 = 0.0f;
 		giroLlanta1 += 5.0f;
-		if (movZ_coche1 >= 975.0f)
+		if (movZ_coche1 >= 875.0f)
 			edoCoche1 = 2;
 		break;
 	case 2:
+		movX_coche1 = -100 * cos(glm::radians(giroCoche1)) + 100;
+		movZ_coche1 = 100 * sin(glm::radians(giroCoche1)) + 875;
+		giroCoche1 += 5.0f;
+		giroLlanta1 += 5.0f;
+		if (giroCoche1 >= 90.0f)
+			edoCoche1 = 3;
+		break;
+	case 3:
 		movX_coche1 += 5.0f;
 		movZ_coche1 = 975.0f;
 		giroCoche1 = 90.0f;
 		giroLlanta1 += 5.0f;
 		if (movX_coche1 >= 870.0f)
-			edoCoche1 = 3;
+			edoCoche1 = 4;
 		break;
-	case 3:
+	case 4:
 		movX_coche1 += 5.0f;
 		movZ_coche1 -= 3.63f * 5.0f;
 		giroCoche1 = 164.6f;
 		giroLlanta1 += 5.0f;
 		if (movX_coche1 >= 1100.0f && movZ_coche1 <= 140.0f)
-			edoCoche1 = 4;
+			edoCoche1 = 5;
 		break;
-	case 4:
+	case 5:
 		movX_coche1 -= 5.0f;
 		movZ_coche1 = 140.0f;
 		giroCoche1 = 270.0f;
 		giroLlanta1 += 5.0f;
 		if (movX_coche1 <= 560.0f)
-			edoCoche1 = 5;
+			edoCoche1 = 6;
 		break;
-	case 5:
+	case 6:
 		movX_coche1 -= 5.0f;
 		movZ_coche1 -= 2.69f * 5.0f;
 		giroCoche1 = 200.4;
 		giroLlanta1 += 5.0f;
 		if (movX_coche1 <= 415.0f && movZ_coche1 <= -250.0)
-			edoCoche1 = 6;
+			edoCoche1 = 7;
 		break;
-	case 6:
+	case 7:
 		movX_coche1 -= 5.0f;
 		movZ_coche1 += 0.6f * 5.0f;
 		giroCoche1 = 301.1f;
@@ -590,26 +598,34 @@ void animate(void)
 		movZ_coche2 -= 5.0f;
 		giroCoche2 = 180.0f;
 		giroLlanta2 += 5.0f;
-		if (movZ_coche2 <= -590.0f)
+		if (movZ_coche2 <= -490.0f)
 			edoCoche2 = 5;
 		break;
 	case 5:
+		movX_coche2 = -100 * cos(glm::radians(giroCoche2)) + 620;
+		movZ_coche2 = 100 * sin(glm::radians(giroCoche2)) - 490;
+		giroCoche2 += 5.0f;
+		giroLlanta2 += 5.0f;
+		if (giroCoche2 >= 270.0f)
+			edoCoche2 = 6;
+		break;
+	case 6:
 		movX_coche2 -= 5.0f;
 		movZ_coche2 = -590.0f;
 		giroCoche2 = 270.0f;
 		giroLlanta2 += 5.0f;
 		if (movX_coche2 <= 195.0f)
-			edoCoche2 = 6;
+			edoCoche2 = 7;
 		break;
-	case 6:
+	case 7:
 		movX_coche2 -= 5.0f;
 		movZ_coche2 += 0.64 * 5.0f;
 		giroCoche2 = 302.66;
 		giroLlanta2 += 5.0f;
 		if (movZ_coche2 >= -465.0f && movX_coche2 <= 0.0f)
-			edoCoche2 = 7;
+			edoCoche2 = 8;
 		break;
-	case 7:
+	case 8:
 		movX_coche2 = 0.0f;
 		movZ_coche2 += 5.0f;
 		giroCoche2 = 0.0f;
@@ -1431,6 +1447,14 @@ int main()
 		staticShader.setFloat("pointLight[7].linear", 0.9f);
 		staticShader.setFloat("pointLight[7].quadratic", 0.032f);
 
+		// Luz BMO
+		staticShader.setVec3("pointLight[8].position", glm::vec3(775.0f + posLuzX, 31.5f + posLuzY, 25.0f + posLuzZ));
+		staticShader.setVec3("pointLight[8].ambient", glm::vec3(0.72f, 1.0f, 0.78f));
+		staticShader.setVec3("pointLight[8].diffuse", glm::vec3(0.72f, 1.0f, 0.78f));
+		staticShader.setVec3("pointLight[8].specular", glm::vec3(0.0f, 0.0f, 0.0f));
+		staticShader.setFloat("pointLight[8].constant", 1.0f);
+		staticShader.setFloat("pointLight[8].linear", 0.9f);
+		staticShader.setFloat("pointLight[8].quadratic", 0.032f);
 
 		staticShader.setFloat("material_shininess", 32.0f);
 
@@ -1820,7 +1844,7 @@ int main()
 		// BMO
 		// Cuerpo
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(775 + BMOposX, 31.5 + BMOposY, 25 + BMOposZ));
+		model = glm::translate(model, glm::vec3(775.0f + BMOposX, 31.5f + BMOposY, 25.0f + BMOposZ));
 		tmp = model = glm::rotate(model, glm::radians(giroBMO), glm::vec3(0.0f, 1.0f, 0.0f));
 		staticShader.setMat4("model", model);
 		bmo.Draw(staticShader);
@@ -1942,7 +1966,24 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 	if (key == GLFW_KEY_LEFT_SHIFT && action == GLFW_PRESS && edoCoche1 == 0)
 		edoCoche2 = 1;
 
-
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+		posLuzX++;
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+		posLuzX--;
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+		posLuzZ++;
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+		posLuzZ--;
+	if (glfwGetKey(window, GLFW_KEY_PAGE_UP) == GLFW_PRESS)
+		posLuzY++;
+	if (glfwGetKey(window, GLFW_KEY_PAGE_DOWN) == GLFW_PRESS)
+		posLuzY--;
+	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
+	{
+		cout << "X = " << posLuzX << endl;
+		cout << "Y = " << posLuzY << endl;
+		cout << "Z = " << posLuzZ << endl;
+	}
 
 	if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
 		lightPosition.x++;
