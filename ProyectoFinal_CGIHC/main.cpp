@@ -553,10 +553,18 @@ void animate(void)
 		break;
 	case 7:
 		movX_coche1 -= 5.0f;
-		movZ_coche1 += 0.6f * 5.0f;
-		giroCoche1 = 301.1f;
+		movZ_coche1 += 0.36f * 5.0f;
+		giroCoche1 = 289.9f;
 		giroLlanta1 += 5.0f;
-		if (movX_coche1 <= 0.0f && movZ_coche1 >= 0.0f)
+		if (movX_coche1 <= 0.0f && movZ_coche1 >= -100.0f)
+			edoCoche1 = 8;
+		break;
+	case 8:
+		movX_coche1 = 0.0f;
+		movZ_coche1 += 5.0f;
+		giroCoche1 = 0.0f;
+		giroLlanta1 += 5.0f;
+		if (movZ_coche1 >= 0.0f)
 			edoCoche1 = 0;
 		break;
 	}
