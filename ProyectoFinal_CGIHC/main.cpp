@@ -1651,7 +1651,7 @@ int main()
 
 		// Alberca
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(400.0f, -500.0f, -700.0f));
+		model = glm::translate(model, glm::vec3(600.0f, 1.5f, -1200.0f));
 		model = glm::scale(model, glm::vec3(15.0f));
 		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		staticShader.setMat4("model", model);

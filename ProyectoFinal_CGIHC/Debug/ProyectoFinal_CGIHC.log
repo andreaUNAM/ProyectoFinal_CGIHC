@@ -1,44 +1,59 @@
 ﻿  main.cpp
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\include\shader_m.h(44,40): warning C4101: 'e': variable local sin referencia
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\include\modelAnim.h(104,44): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\include\modelAnim.h(520,24): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(255,1): warning C4005: 'MAX_FRAMES': redefinición de macro
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(209): message : vea la definición anterior de 'MAX_FRAMES'
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(544,21): warning C4305: '=': truncamiento de 'double' a 'float'
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(578,20): warning C4305: '=': truncamiento de 'double' a 'float'
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(586,21): warning C4305: '=': truncamiento de 'double' a 'float'
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(609,29): warning C4305: '+=': truncamiento de 'double' a 'float'
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(610,22): warning C4305: '=': truncamiento de 'double' a 'float'
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(636,20): warning C4305: '+=': truncamiento de 'double' a 'float'
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(638,24): warning C4305: '-=': truncamiento de 'double' a 'float'
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(651,24): warning C4305: '+=': truncamiento de 'double' a 'float'
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(672,26): warning C4305: '+=': truncamiento de 'double' a 'float'
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(696,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(697,20): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(706,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(710,17): warning C4305: '=': truncamiento de 'double' a 'float'
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(717,34): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(718,20): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(1082,35): warning C4305: '=': truncamiento de 'double' a 'float'
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(1099,35): warning C4305: '=': truncamiento de 'double' a 'float'
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(1133,39): warning C4305: '=': truncamiento de 'double' a 'float'
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(1577,11): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(1580,10): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(1682,42): warning C4305: 'argumento': truncamiento de 'double' a 'T'
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\include\shader_m.h(44,40): warning C4101: 'e': unreferenced local variable
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\include\modelAnim.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\include\modelAnim.h(520,24): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(252,1): warning C4005: 'MAX_FRAMES': macro redefinition
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(206): message : see previous definition of 'MAX_FRAMES'
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(549,21): warning C4305: '=': truncation from 'double' to 'float'
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(591,20): warning C4305: '=': truncation from 'double' to 'float'
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(599,21): warning C4305: '=': truncation from 'double' to 'float'
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(630,29): warning C4305: '+=': truncation from 'double' to 'float'
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(631,22): warning C4305: '=': truncation from 'double' to 'float'
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(657,20): warning C4305: '+=': truncation from 'double' to 'float'
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(659,24): warning C4305: '-=': truncation from 'double' to 'float'
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(672,24): warning C4305: '+=': truncation from 'double' to 'float'
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(693,26): warning C4305: '+=': truncation from 'double' to 'float'
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(717,24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(718,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(727,24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(731,17): warning C4305: '=': truncation from 'double' to 'float'
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(738,34): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(739,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(1103,35): warning C4305: '=': truncation from 'double' to 'float'
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(1120,35): warning C4305: '=': truncation from 'double' to 'float'
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(1154,39): warning C4305: '=': truncation from 'double' to 'float'
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(1606,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(1609,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(1711,42): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(1696,42): warning C4305: 'argumento': truncamiento de 'double' a 'T'
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(1725,42): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(2040,11): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(2041,11): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(2045,16): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(2046,16): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(2048,10): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(2049,10): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(2057,28): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
-  ProyectoFinal_CGIHC.vcxproj -> E:\Windows\FI\carrera\OctavoSemestre\Proyectos\ProyectoFinal_CGIHC\Debug\ProyectoFinal_CGIHC.exe
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(2086,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(2087,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(2091,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(2092,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(2094,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(2095,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\semestre actual\grafica\ProyectoFinal_CGIHC\ProyectoFinal_CGIHC\main.cpp(2103,28): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+glfw3.lib(context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(context.obj)' or at 'D:\semestre actual\grafica\ProyectoFinal_CGIHC\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(init.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(init.obj)' or at 'D:\semestre actual\grafica\ProyectoFinal_CGIHC\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(input.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(input.obj)' or at 'D:\semestre actual\grafica\ProyectoFinal_CGIHC\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(monitor.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(monitor.obj)' or at 'D:\semestre actual\grafica\ProyectoFinal_CGIHC\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(vulkan.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(vulkan.obj)' or at 'D:\semestre actual\grafica\ProyectoFinal_CGIHC\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(window.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(window.obj)' or at 'D:\semestre actual\grafica\ProyectoFinal_CGIHC\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_init.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_init.obj)' or at 'D:\semestre actual\grafica\ProyectoFinal_CGIHC\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_joystick.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_joystick.obj)' or at 'D:\semestre actual\grafica\ProyectoFinal_CGIHC\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_monitor.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_monitor.obj)' or at 'D:\semestre actual\grafica\ProyectoFinal_CGIHC\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_time.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_time.obj)' or at 'D:\semestre actual\grafica\ProyectoFinal_CGIHC\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_thread.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_thread.obj)' or at 'D:\semestre actual\grafica\ProyectoFinal_CGIHC\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_window.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_window.obj)' or at 'D:\semestre actual\grafica\ProyectoFinal_CGIHC\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(wgl_context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(wgl_context.obj)' or at 'D:\semestre actual\grafica\ProyectoFinal_CGIHC\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(egl_context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(egl_context.obj)' or at 'D:\semestre actual\grafica\ProyectoFinal_CGIHC\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(osmesa_context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(osmesa_context.obj)' or at 'D:\semestre actual\grafica\ProyectoFinal_CGIHC\Debug\glfw.pdb'; linking object as if no debug info
+  ProyectoFinal_CGIHC.vcxproj -> D:\semestre actual\grafica\ProyectoFinal_CGIHC\Debug\ProyectoFinal_CGIHC.exe

@@ -1,35 +1,7 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# File Created: 03.05.2022 23:08:12
+# File Created: 22.05.2022 21:12:22
 
-newmtl uploads_files_1833002_Swimming_Pool_Tiles_small_blue
-	Ns 10.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 0.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 0.5880 0.5880 0.5880
-	Kd 0.5880 0.5880 0.5880
-	Ks 0.0000 0.0000 0.0000
-	Ke 0.0000 0.0000 0.0000
-	map_Ka piso.png
-	map_Kd piso.png
-
-newmtl uploads_files_1833002_Swimming_Pool_wire_228214153
-	Ns 10.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 0.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 0.5880 0.5880 0.5880
-	Kd 0.5880 0.5880 0.5880
-	Ks 0.0000 0.0000 0.0000
-	Ke 0.0000 0.0000 0.0000
-	map_Ka plateado.jpg
-	map_Kd plateado.jpg
-
-newmtl uploads_files_1833002_Swimming_Pool_wire_154154229
+newmtl pool_uploads_files_1833002_Swimming_Pool_wire_154154229
 	Ns 10.0000
 	Ni 1.5000
 	d 1.0000
@@ -42,3 +14,17 @@ newmtl uploads_files_1833002_Swimming_Pool_wire_154154229
 	Ke 0.0000 0.0000 0.0000
 	map_Ka agua.jpg
 	map_Kd agua.jpg
+
+newmtl pool_uploads_files_1833002_Swimming_Pool_Tiles_small_blue
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka piso.png
+	map_Kd piso.png
