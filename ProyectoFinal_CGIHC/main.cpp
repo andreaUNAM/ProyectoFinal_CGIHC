@@ -2119,31 +2119,6 @@ int main()
 		staticShader.setMat4("model", model);
 		ruby.Draw(staticShader);
 
-		// HOOTY
-
-		LoadTextures();
-		myData();
-
-		myShader.use();
-		myShader.setMat4("projection", projection);
-		myShader.setMat4("view", view);
-
-		glBindVertexArray(VAO[1]);
-		tmp = model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 50.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(20.0f));
-		myShader.setMat4("model", model);
-		myShader.setVec3("aColor", 1.0f, 1.0f, 1.0f);
-		glBindTexture(GL_TEXTURE_2D, t_hooty);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-
-		model = glm::translate(tmp, glm::vec3(0.0f, -30.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(20.0f));
-		myShader.setMat4("model", model);
-		myShader.setVec3("aColor", 1.0f, 1.0f, 1.0f);
-		glBindTexture(GL_TEXTURE_2D, t_hooty);
-		glDrawArrays(GL_TRIANGLES, 36, 36);
-
-		glBindVertexArray(0);
 		// -------------------------------------------------------------------------------------------------------------------------
 		// Termina Escenario
 		// -------------------------------------------------------------------------------------------------------------------------
