@@ -475,8 +475,7 @@ void animate(void)
 				//printf("termina anim\n");
 				playIndex2 = 0;
 				play2 = false;
-				ritualVoodoo = false;
-				resetElements2();
+				ritualVoodoo = false
 			}
 			else //Next frame interpolations
 			{
