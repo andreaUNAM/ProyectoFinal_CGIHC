@@ -1492,6 +1492,9 @@ int main()
 	// draw in wireframe
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+	LoadTextures();
+	myData();
+
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -1649,6 +1652,30 @@ int main()
 		glm::vec3 lightColor = glm::vec3(0.6f);
 		glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
 		glm::vec3 ambientColor = diffuseColor * glm::vec3(0.75f);
+
+
+		// HOOTY
+
+		myShader.use();
+		myShader.setMat4("projection", projection);
+		myShader.setMat4("view", view);
+
+		glBindVertexArray(VAO[1]);
+		tmp = model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 50.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(20.0f));
+		myShader.setMat4("model", model);
+		myShader.setVec3("aColor", 1.0f, 1.0f, 1.0f);
+		glBindTexture(GL_TEXTURE_2D, t_hooty);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(tmp, glm::vec3(0.0f, -30.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(20.0f));
+		myShader.setMat4("model", model);
+		myShader.setVec3("aColor", 1.0f, 1.0f, 1.0f);
+		glBindTexture(GL_TEXTURE_2D, t_hooty);
+		glDrawArrays(GL_TRIANGLES, 36, 36);
+
+		glBindVertexArray(0);
 
 
 		// -------------------------------------------------------------------------------------------------------------------------
@@ -2091,13 +2118,6 @@ int main()
 		model = glm::scale(model, glm::vec3(0.5f));
 		staticShader.setMat4("model", model);
 		ruby.Draw(staticShader);
-
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(750, 0, 300.0f));
-		model = glm::scale(model, glm::vec3(0.5f));
-		model = glm::rotate(model, glm::radians(60.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		staticShader.setMat4("model", model);
-		itadori.Draw(staticShader);
 
 		// HOOTY
 
