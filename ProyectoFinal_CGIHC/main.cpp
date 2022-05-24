@@ -103,6 +103,7 @@ int helado_opt = 0;
 int cont_galleta = 0;
 bool existe_charco = false;
 bool ritualVoodoo = false;
+int cont_helado = 0;
 
 //Variables de modificacion helado
 float y_gota = 3.5f;
@@ -727,7 +728,7 @@ void animate(void)
 	}
 
 	if (derretir_helado) {
-
+		cont_helado = cont_helado + 0.1f;
 
 		if (pos_gota >= -270.0f && helado_opt == 0) {
 			pos_gota = pos_gota - 0.2;
@@ -762,9 +763,10 @@ void animate(void)
 		}
 
 
-		if (cont_galleta >= 3) {
+		if (cont_galleta >= 3 && cont_helado >= 50) {
 			helado_opt = 0;
 			cont_galleta = 0;
+			cont_helado = 0;
 			existe_charco = false;
 			y_gota = 3.5f;
 			pos_gota = -230.0f;
