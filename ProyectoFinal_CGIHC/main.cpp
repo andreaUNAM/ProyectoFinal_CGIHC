@@ -28,6 +28,10 @@
 #include <model.h>
 #include <Skybox.h>
 #include <iostream>
+#include <irrklang/irrKlang.h>
+using namespace irrklang;
+
+
 
 //#pragma comment(lib, "winmm.lib")
 
@@ -177,6 +181,14 @@ float nail3X = 2150.0f,
       nail3XInc = 0.0f,
       nail3YInc = 0.0f, 
 	  nail3ZInc = 0.0f;
+
+//music
+bool ambientalpause = true;
+bool cowSoundPause = true;
+
+ISoundEngine* engine = createIrrKlangDevice();
+ISound* ambientalMusic = engine->play2D("resources/music/soy_un_cometa.wav", true, true, true);
+ISound* cowSound = engine->play3D("resources/music/vaca.wav",vec3df(0,0,0),true,true,true);
 
 
 //Keyframes (Manipulación y dibujo)
@@ -846,7 +858,9 @@ void getResolution()
 
 int main()
 {
-	bool played = sndPlaySound("resources/music/soy_un_cometa.wav", SND_ASYNC);
+	if (!cowSound->getIsPaused()) {
+		cowSound->setMinDistance(0.5f);
+	}
 	// glfw: initialize and configure
 	// ------------------------------
 	glfwInit();
@@ -1998,8 +2012,11 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 	if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS)
 		lightPosition.x--;
 
-	if (key == GLFW_KEY_X && action == GLFW_PRESS)
+	if (key == GLFW_KEY_X && action == GLFW_PRESS) {
+		cowSoundPause ^= true;
+		cowSound->setIsPaused(cowSoundPause);
 		abducir ^= true;
+	}
 	if (key == GLFW_KEY_R && action == GLFW_PRESS)
 		hacer_ritual ^= true;
 
@@ -2008,6 +2025,10 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 	
 	if (key == GLFW_KEY_2 && action == GLFW_PRESS)
 		hacer_hechizo ^= true;
+
+	if (key == GLFW_KEY_7 && action == GLFW_PRESS)
+		ambientalpause ^= true;
+		ambientalMusic->setIsPaused(ambientalpause);
 
 	//To play KeyFrame animation 
 	if (key == GLFW_KEY_P && action == GLFW_PRESS)
