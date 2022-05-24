@@ -1141,6 +1141,9 @@ int main()
 	Model nail3("resources/objects/nail/nail.obj");
 	Model voodoDoll("resources/objects/VoodooDoll/VoodooDoll.obj");
 
+	//Ruby
+	Model ruby("resources/objects/Ruby/ruby.obj");
+
 	ModelAnim maldicion("resources/objects/maldicion1/maldicion1.dae");
 	maldicion.initShaders(animShader.ID);
 
@@ -2090,6 +2093,12 @@ int main()
 			staticShader.setMat4("model", model);
 			eda_esfera.Draw(staticShader);
 		}
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(800, 0, 200.0f));
+		model = glm::scale(model, glm::vec3(0.5f));
+		staticShader.setMat4("model", model);
+		ruby.Draw(staticShader);
 
 		// HOOTY
 
