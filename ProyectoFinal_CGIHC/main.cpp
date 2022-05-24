@@ -1143,9 +1143,7 @@ int main()
 
 	//Ruby
 	Model ruby("resources/objects/Ruby/ruby.obj");
-
-	ModelAnim maldicion("resources/objects/maldicion1/maldicion1.dae");
-	maldicion.initShaders(animShader.ID);
+	Model itadori("resources/objects/Itadori/Itadori.obj");
 
 	//Inicialización de KeyFrames
 	// Baile pregrabado
@@ -1669,12 +1667,6 @@ int main()
 		animShader.setVec3("light.direction", lightDirection);
 		animShader.setVec3("viewPos", camera.Position);
 
-		model = glm::translate(glm::mat4(1.0f), glm::vec3(890.0f, -2.5f, 400.0f));
-		model = glm::scale(model, glm::vec3(1.2f));
-		model = glm::rotate(model, glm::radians(270.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		animShader.setMat4("model", model);
-		maldicion.Draw(animShader);
-
 		// -------------------------------------------------------------------------------------------------------------------------
 		// Escenario
 		// -------------------------------------------------------------------------------------------------------------------------
@@ -2099,6 +2091,13 @@ int main()
 		model = glm::scale(model, glm::vec3(0.5f));
 		staticShader.setMat4("model", model);
 		ruby.Draw(staticShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(750, 0, 300.0f));
+		model = glm::scale(model, glm::vec3(0.5f));
+		model = glm::rotate(model, glm::radians(60.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		itadori.Draw(staticShader);
 
 		// HOOTY
 
