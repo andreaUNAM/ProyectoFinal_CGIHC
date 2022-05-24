@@ -476,8 +476,7 @@ void animate(void)
 				//printf("termina anim\n");
 				playIndex2 = 0;
 				play2 = false;
-				ritualVoodoo = false;
-				resetElements2();
+				ritualVoodoo = false
 			}
 			else //Next frame interpolations
 			{
@@ -1145,9 +1144,7 @@ int main()
 
 	//Ruby
 	Model ruby("resources/objects/Ruby/ruby.obj");
-
-	ModelAnim maldicion("resources/objects/maldicion1/maldicion1.dae");
-	maldicion.initShaders(animShader.ID);
+	Model itadori("resources/objects/Itadori/Itadori.obj");
 
 	//Inicialización de KeyFrames
 	// Baile pregrabado
@@ -1697,13 +1694,6 @@ int main()
 		animShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 		animShader.setVec3("light.direction", lightDirection);
 		animShader.setVec3("viewPos", camera.Position);
-
-		model = glm::translate(glm::mat4(1.0f), glm::vec3(890.0f, -2.5f, 400.0f));
-		model = glm::scale(model, glm::vec3(1.2f));
-		model = glm::rotate(model, glm::radians(270.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		animShader.setMat4("model", model);
-		maldicion.Draw(animShader);
-
 
 		// -------------------------------------------------------------------------------------------------------------------------
 		// Escenario
