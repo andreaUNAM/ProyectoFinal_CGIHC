@@ -46,8 +46,12 @@ void animate(void);
 unsigned int SCR_WIDTH = 800;
 unsigned int SCR_HEIGHT = 600;
 GLFWmonitor* monitors;
+GLuint VBO[2], VAO[2], EBO[2];
 
 void getResolution(void);
+
+//Texture
+unsigned int	t_hooty;
 
 // camera
 Camera camera(glm::vec3(0.0f, 300.0f, 0.0f));
@@ -847,6 +851,45 @@ void animate(void)
 	}
 }
 
+unsigned int generateTextures(const char* filename, bool alfa)
+{
+	unsigned int textureID;
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	// load image, create texture and generate mipmaps
+	int width, height, nrChannels;
+	stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+
+	unsigned char* data = stbi_load(filename, &width, &height, &nrChannels, 0);
+	if (data)
+	{
+		if (alfa)
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		else
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+		return textureID;
+	}
+	else
+	{
+		std::cout << "Failed to load texture" << std::endl;
+		return 100;
+	}
+
+	stbi_image_free(data);
+}
+
+void LoadTextures()
+{
+	t_hooty = generateTextures("textures/hootySkin.png", 1);
+}
+
 void getResolution()
 {
 	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
@@ -855,6 +898,73 @@ void getResolution()
 	SCR_HEIGHT = (mode->height) - 80;
 }
 
+void myData()
+{
+	// Trazo Hooty
+	GLfloat verticesHooty[] = {
+		//Posición				//Coordenadas de textura
+		-0.5f, -0.5f, 0.5f,		0.00f, 0.66f,	//V0 - Frontal
+		 0.5f, -0.5f, 0.5f,		0.33f, 0.66f,	//V1
+		 0.5f,  0.5f, 0.5f,		0.33f, 1.00f,	//V5
+		-0.5f, -0.5f, 0.5f,		0.00f, 0.66f,	//V0
+		-0.5f,  0.5f, 0.5f,		0.00f, 1.00f,	//V4
+		 0.5f,  0.5f, 0.5f,		0.33f, 1.00f,	//V5
+
+		 0.5f, -0.5f, -0.5f,	0.33f, 0.33f,	//V2 - Trasera
+		-0.5f, -0.5f, -0.5f,	0.00f, 0.33f,	//V3
+		-0.5f,  0.5f, -0.5f,	0.00f, 0.66f,	//V7
+		 0.5f, -0.5f, -0.5f,	0.33f, 0.33f,	//V2
+		 0.5f,  0.5f, -0.5f,	0.33f, 0.66f,	//V6
+		-0.5f,  0.5f, -0.5f,	0.00f, 0.66f,	//V7
+
+		-0.5f,  0.5f,  0.5f,	0.00f, 1.00f,	//V4 - Izq
+		-0.5f,  0.5f, -0.5f,	0.00f, 0.66f,	//V7
+		-0.5f, -0.5f, -0.5f,	0.00f, 0.3333f,	//V3
+		-0.5f, -0.5f, -0.5f,	0.00f, 0.3333f,	//V3
+		-0.5f,  0.5f,  0.5f,	0.00f, 1.00f,	//V4
+		-0.5f, -0.5f,  0.5f,	0.00f, 0.66f,	//V0
+
+		0.5f, 0.5f, 0.5f,		0.33f, 1.00f,	//V5 - Der
+		0.5f, -0.5f, 0.5f,		0.33f, 0.66f,	//V1
+		0.5f, -0.5f, -0.5f,		0.75f, 0.3333f,	//V2
+		0.5f, 0.5f, 0.5f,		0.33f, 1.00f,	//V5
+		0.5f, 0.5f, -0.5f,		0.75f, 0.6666f,	//V6
+		0.5f, -0.5f, -0.5f,		0.75f, 0.3333f,	//V2
+
+		-0.5f, 0.5f, 0.5f,		0.00f, 1.00f,	//V4 - Sup
+		0.5f, 0.5f, 0.5f,		0.33f, 1.00f,	//V5
+		0.5f, 0.5f, -0.5f,		0.50f, 1.0f,	//V6
+		-0.5f, 0.5f, 0.5f,		0.00f, 1.00f,	//V4
+		-0.5f, 0.5f, -0.5f,		0.00f, 0.66f,	//V7
+		0.5f, 0.5f, -0.5f,		0.50f, 1.0f,	//V6
+
+		-0.5f, -0.5f, 0.5f,		0.00f, 0.66f,	//V0 - Inf
+		-0.5f, -0.5f, -0.5f,	0.25f, 0.0f,	//V3
+		0.5f, -0.5f, -0.5f,		0.50f, 0.0f,	//V2
+		-0.5f, -0.5f, 0.5f,		0.25f, 0.3333f,	//V0
+		0.5f, -0.5f, -0.5f,		0.50f, 0.0f,	//V2
+		0.5f, -0.5f, 0.5f,		0.33f, 0.66f,	//V1
+	};
+
+	glGenVertexArrays(2, VAO);
+	glGenBuffers(2, VBO);
+	glGenBuffers(2, EBO);
+
+	//PARA CUBO
+	glBindVertexArray(VAO[1]);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesHooty), verticesHooty, GL_STATIC_DRAW);
+
+	// position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	// texture coord attribute
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+}
 
 int main()
 {
@@ -912,6 +1022,7 @@ int main()
 	Shader staticShader("Shaders/shader_Lights.vs", "Shaders/shader_Lights.fs");
 	Shader skyboxShader("Shaders/skybox.vs", "Shaders/skybox.fs");
 	Shader animShader("Shaders/anim.vs", "Shaders/anim.fs");
+	Shader myShader("shaders/shader_texture_color.vs", "shaders/shader_texture_color.fs");
 
 	vector<std::string> faces
 	{
@@ -1935,6 +2046,21 @@ int main()
 			staticShader.setMat4("model", model);
 			eda_esfera.Draw(staticShader);
 		}
+
+		LoadTextures();
+		myData();
+
+		myShader.use();
+		myShader.setMat4("projection", projection);
+		myShader.setMat4("view", view);
+		// Avatares
+		glBindVertexArray(VAO[1]);
+		model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 50.0f));
+		model = glm::scale(model, glm::vec3(10.0f));
+		myShader.setMat4("model", model);
+		myShader.setVec3("aColor", 1.0f, 1.0f, 1.0f);
+		glBindTexture(GL_TEXTURE_2D, t_hooty);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		// -------------------------------------------------------------------------------------------------------------------------
 		// Termina Escenario
