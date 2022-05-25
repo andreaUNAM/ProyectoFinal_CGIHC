@@ -476,7 +476,7 @@ void animate(void)
 				//printf("termina anim\n");
 				playIndex2 = 0;
 				play2 = false;
-				ritualVoodoo = false
+				ritualVoodoo = false;
 			}
 			else //Next frame interpolations
 			{
@@ -2119,6 +2119,13 @@ int main()
 		model = glm::scale(model, glm::vec3(0.5f));
 		staticShader.setMat4("model", model);
 		ruby.Draw(staticShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(750, 0, 300.0f));
+		model = glm::scale(model, glm::vec3(0.5f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		staticShader.setMat4("model", model);
+		itadori.Draw(staticShader);
 
 		// -------------------------------------------------------------------------------------------------------------------------
 		// Termina Escenario
