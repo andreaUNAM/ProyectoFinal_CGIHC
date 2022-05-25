@@ -5,6 +5,12 @@
 #include <math.h>
 #include <glfw3.h>
 
+#include "iostream"
+#include "string"
+
+
+using namespace std;
+
 static void drawTorus(int numMajor, int numMinor, float majorRadius, float minorRadius)
 {
     static double PI = 3.1415926535897932384626433832795;
@@ -45,7 +51,7 @@ static void drawTorus(int numMajor, int numMinor, float majorRadius, float minor
 }
 
 
-static void renderMesh()
+static void renderMesh(float majorRadius, float minorRadius)
 {
     glLoadIdentity();
 
@@ -64,12 +70,34 @@ static void renderMesh()
 
     glEnd();
 
-    drawTorus(10, 10, 0.5, .2);
+    drawTorus(20, 20, majorRadius, minorRadius);
 }
 
 
 int main()
 {
+    float majorRadius = -1.0f;
+    float minorRadius = -1.0f;
+    int scr_width = 0;
+    int scr_height = 0;
+    while (scr_width <= 0) {
+        cout << "Ingrese el valor deseado del ancho de resolucion\n$";
+        cin >> scr_width;
+    }
+    while (scr_height <= 0) {
+        cout << "Ingrese el valor deseado del alto de resolucion\n$";
+        cin >> scr_height;
+    }
+    while (minorRadius < 0.0 || minorRadius >= 1.0) {
+        cout << "Ingrese el valor del radio menor entre 0 y 1\n$";
+        cin >> minorRadius;
+    }
+
+    while (majorRadius < minorRadius || majorRadius > 1.0) {
+        cout << "Ingrese el valor del radio major entre 0 y 1\n$";
+        cin >> majorRadius;
+    }
+
     GLFWwindow* window;
 
     if (!glfwInit()) {
@@ -82,7 +110,7 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 
     //Create Window
-    window = glfwCreateWindow(1000, 600, "OpenGL with GLFW", NULL, NULL);
+    window = glfwCreateWindow(scr_width, scr_height, "OpenGL with GLFW", NULL, NULL);
     if (!window) {
         fprintf(stderr, "Failed to make window\n");
         glfwTerminate();
@@ -108,7 +136,7 @@ int main()
         glClearColor(0.3, 0.3, 0.3, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        renderMesh();
+        renderMesh(majorRadius,minorRadius);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
